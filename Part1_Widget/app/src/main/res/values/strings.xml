@@ -4,4 +4,14 @@
     <string name="hint2">Enter number 2</string>
     <string name="title">Mini Calculator</string>
     <string name="author">Developed by <b>CodeWithIsmail</b></string>
+    <string name="checkList">Select your orderlist</string>
+    <string name="pen">Pen</string>
+    <string name="pensil">Pensil</string>
+    <string name="book">Book</string>
+    <string name="khata">Khata</string>
+    <string name="submit">Submit</string>
+    <string name="gender">Select your Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gendersubmit">Submit</string>
 </resources>
