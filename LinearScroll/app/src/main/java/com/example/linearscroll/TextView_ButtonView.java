@@ -3,6 +3,8 @@ package com.example.linearscroll;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -84,6 +86,10 @@ public class TextView_ButtonView extends AppCompatActivity {
             clickedtext.setText("Log in clicked!");
         }
 
-        Toast.makeText(this, "Button clicked", Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, "Button clicked", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+        Log.d("button","button clicked");
     }
 }

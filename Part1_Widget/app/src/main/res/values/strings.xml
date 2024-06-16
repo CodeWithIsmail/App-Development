@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Part1_Widget</string>
+    <string name="hint1">Enter number 1</string>
+    <string name="hint2">Enter number 2</string>
+    <string name="title">Mini Calculator</string>
+    <string name="author">Developed by <b>CodeWithIsmail</b></string>
+</resources>
