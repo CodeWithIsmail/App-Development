@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">BMI Calculator</string>
+
+    <string name="Underweight">BMI Status: Underweight</string>
+    <string name="Normal">BMI Status: Normal</string>
+    <string name="Overweight">BMI Status: Overweight</string>
+    <string name="Obesity1">BMI Status: Moderate obesity</string>
+    <string name="Obesity2">BMI Status: Severe obesity</string>
+    <string name="Obesity3">BMI Status: Morbid obesity</string>
+
+    <string name="UnderweightR">Health Risks: \n\nMay indicate malnutrition, eating disorders, or other health issues. Risks include weakened immune system.</string>
+    <string name="NormalR">Health Risks: \n\nTypically associated with the lowest risk of developing weight-related health problems. It\'s considered the healthiest range for most people.</string>
+    <string name="OverweightR">Health Risks: \n\nHigher risk of developing conditions such as cardiovascular disease, type 2 diabetes, high blood pressure, and certain cancers.</string>
+    <string name="Obesity1R">Health Risks: \n\nIncreased risk of cardiovascular diseases, type 2 diabetes, high blood pressure, and certain cancers.</string>
+    <string name="Obesity2R">Health Risks: \n\nHigher risk of developing conditions such as cardiovascular disease, type 2 diabetes, high blood pressure, and certain cancers, often with greater severity.</string>
+    <string name="Obesity3R">Health Risks: \n\nSignificantly increased risk of serious health problems, including heart disease, diabetes, hypertension, sleep apnea, and various cancers.</string>
+
 </resources>
