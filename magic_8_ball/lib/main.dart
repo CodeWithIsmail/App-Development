@@ -53,8 +53,7 @@ class _BallState extends State<Ball> {
             ),
             Text(
               'Developed by CodeWithIsmail',
-              style: TextStyle(
-                  fontSize: 18, fontFamily: 'fonts/PressStart2P-Regular.ttf'),
+              style: TextStyle(fontSize: 10, fontFamily: 'PressStart'),
             ),
           ],
         ),
