@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,11 +23,10 @@ class MyApp extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 80,
-                backgroundImage: NetworkImage(
-                    'https://avatars.githubusercontent.com/u/118668314?v=4'),
+                backgroundImage: AssetImage('images/img1.jpg'),
               ),
               SizedBox(
-                height: 10,
+                height: 15,
               ),
               Text(
                 'Ismail Hossain',
@@ -44,102 +44,110 @@ class MyApp extends StatelessWidget {
                 'FLUTTER DEVELOPER',
                 style: TextStyle(
                   fontFamily: 'Newfont',
-                  fontSize: 18,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
                   letterSpacing: 2,
                 ),
               ),
-              Container(
+              SizedBox(
+                height: 15,
+              ),
+              Card(
                 color: Colors.white,
                 margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: Row(
-                  children: [
-                    Icon(
+                child: GestureDetector(
+                  onTap: () => launch('mailto:@gmail.com'),
+                  child: ListTile(
+                    leading: Icon(
                       Icons.email,
-                      size: 25,
+                      size: 24,
                       color: Colors.blue.shade900,
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      'bsse1433@iit.du.ac.bd',
+                    title: Text(
+                      'Email',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                color: Colors.white,
-                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.phone,
-                      size: 25,
-                      color: Colors.blue.shade900,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      '015xxxxxx99',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
                       ),
                     ),
-                  ],
-                ),
-              ),
-              Container(
-                color: Colors.white,
-                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.person,
-                      size: 25,
-                      color: Colors.blue.shade900,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      'CodeWithIsmail',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
+                  ),
                 ),
               ),
               Card(
                 color: Colors.white,
                 margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    size: 25,
-                    color: Colors.blue.shade900,
-                  ),
-                  title: Text(
-                    'ismail360',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () => launch('tel:015377'),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.phone,
+                      size: 24,
+                      color: Colors.blue.shade900,
+                    ),
+                    title: Text(
+                      'Contact',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ],
+              Card(
+                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                color: Colors.white,
+                child: GestureDetector(
+                  onTap: () => launch('https://github.com/CodeWithIsmail'),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 12,
+                      child: SvgPicture.asset(
+                        'icons/github.svg',
+                        color: Colors.blue.shade900,
+                      ),
+                    ),
+                    title: Text(
+                      'Connect on Github',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                color: Colors.white,
+                margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                child: GestureDetector(
+                  onTap: () => launch('https://www.linkedin.com/in/ismail360/'),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 12,
+                      backgroundColor: Colors.white,
+                      child: SvgPicture.asset(
+                        'icons/lin.svg',
+                        color: Colors.blue.shade900,
+                      ),
+                    ),
+                    title: Text(
+                      'Connect on LinkedIn',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ], // children
           ),
         ),
       ),
