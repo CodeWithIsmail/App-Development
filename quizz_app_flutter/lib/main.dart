@@ -4,6 +4,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(QuizApp());
 
@@ -46,15 +49,9 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  bool done = false;
   int currentQues = 0;
   List<Icon> scoreboard = [];
-  List<String> questions = [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.'
-  ];
-  List<String> answers = ['false', 'true', 'true'];
-  bool done = false;
 
   void end() {
     Fluttertoast.showToast(
@@ -72,7 +69,7 @@ class _QuizPageState extends State<QuizPage> {
       end();
     else {
       setState(() {
-        if (answers[currentQues] == need) {
+        if (quizBrain.questionbank[currentQues].answer == need) {
           scoreboard.add(
             Icon(
               Icons.check,
@@ -89,7 +86,7 @@ class _QuizPageState extends State<QuizPage> {
             ),
           );
         }
-        if (currentQues == 2) {
+        if (currentQues == quizBrain.questionbank.length - 1) {
           done = true;
         } else
           currentQues++;
@@ -110,7 +107,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: Text(
                 // textAlign: TextAlign.center,
-                questions[currentQues],
+                quizBrain.questionbank[currentQues].question,
                 style: TextStyle(
                   fontSize: 25,
                 ),
