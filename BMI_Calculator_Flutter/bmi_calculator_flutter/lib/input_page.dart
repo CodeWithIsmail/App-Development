@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'GenderSelectWidget.dart';
 import 'Reusable_Container.dart';
+import 'constants.dart';
 
-const lastCardColor = Colors.pinkAccent;
-const allCardColor = Color(0xFF1D1E33);
-const inactivecolor = Color(0xFF111328);
-
-enum GenderType { male, female,nothing }
+enum GenderType { male, female, nothing }
 
 class InputPage extends StatefulWidget {
   @override
@@ -17,9 +14,11 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleColor = inactivecolor;
-  Color femaleColor = inactivecolor;
-   GenderType selectedGender=GenderType.nothing;
+  Color maleColor = KInactivecolor;
+  Color femaleColor = KInactivecolor;
+  GenderType selectedGender = GenderType.nothing;
+
+  int feetH = 2, inchH = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +45,8 @@ class _InputPageState extends State<InputPage> {
                     },
                     child: Reusable_Container(
                       color: selectedGender == GenderType.male
-                          ? allCardColor
-                          : inactivecolor,
+                          ? KLllCardColor
+                          : KInactivecolor,
                       childWidget:
                           GenderSelectWidget(FontAwesomeIcons.mars, 'MALE'),
                     ),
@@ -63,8 +62,8 @@ class _InputPageState extends State<InputPage> {
                     },
                     child: Reusable_Container(
                       color: selectedGender == GenderType.female
-                          ? allCardColor
-                          : inactivecolor,
+                          ? KLllCardColor
+                          : KInactivecolor,
                       childWidget:
                           GenderSelectWidget(FontAwesomeIcons.venus, 'FEMALE'),
                     ),
@@ -75,7 +74,86 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: Reusable_Container(
-              color: allCardColor,
+              color: KLllCardColor,
+              childWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'HEIGHT',
+                    style: KIconTextStyle,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  feetH.toString(),
+                                  style: KValueTextStyle,
+                                ),
+                                Text(
+                                  'Feet',
+                                  style: KIconTextStyle,
+                                )
+                              ],
+                            ),
+                            Slider(
+                              value: feetH.toDouble(),
+                              onChanged: (double currentFeet) {
+                                setState(() {
+                                  feetH = currentFeet.round();
+                                });
+                              },
+                              activeColor: Colors.pinkAccent,
+                              inactiveColor: Colors.grey.shade600,
+                              min: 0,
+                              max: 9,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  inchH.toString(),
+                                  style: KValueTextStyle,
+                                ),
+                                Text(
+                                  'Inch',
+                                  style: KIconTextStyle,
+                                )
+                              ],
+                            ),
+                            Slider(
+                              value: inchH.toDouble(),
+                              onChanged: (double currentInch) {
+                                setState(() {
+                                  inchH = currentInch.round();
+                                });
+                              },
+                              activeColor: Colors.pinkAccent,
+                              inactiveColor: Colors.grey.shade600,
+                              min: 2,
+                              max: 11,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -83,12 +161,12 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: Reusable_Container(
-                    color: allCardColor,
+                    color: KLllCardColor,
                   ),
                 ),
                 Expanded(
                   child: Reusable_Container(
-                    color: allCardColor,
+                    color: KLllCardColor,
                   ),
                 ),
               ],
@@ -96,7 +174,7 @@ class _InputPageState extends State<InputPage> {
           ),
           Container(
             width: double.infinity,
-            color: lastCardColor,
+            color: KLastCardColor,
             height: 75.0,
             margin: EdgeInsets.only(top: 10),
           ),
