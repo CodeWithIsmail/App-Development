@@ -7,6 +7,8 @@ import 'Reusable_Container.dart';
 import 'constants.dart';
 import 'result_page.dart';
 import 'bmi_info.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 enum GenderType { male, female, nothing }
 
 class InputPage extends StatefulWidget {
@@ -169,7 +171,7 @@ class _InputPageState extends State<InputPage> {
                               },
                               activeColor: Colors.pinkAccent,
                               inactiveColor: Colors.grey.shade600,
-                              min: 2,
+                              min: 0,
                               max: 11,
                             ),
                           ],
@@ -257,12 +259,23 @@ class _InputPageState extends State<InputPage> {
           ),
           GestureDetector(
             onTap: () {
-              BMI_info bmi_find=BMI_info(feetH, inchH, weight);
-              bmi_find.getResult();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ResultPage(bmi_find)),
-              );
+              if (weight < 1 || (feetH == 0 && inchH == 0)) {
+                Fluttertoast.showToast(
+                    msg: "Invalid Input",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                    fontSize: 16.0);
+              } else {
+                BMI_info bmi_find = BMI_info(feetH, inchH, weight);
+                bmi_find.getResult();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ResultPage(bmi_find)),
+                );
+              }
             },
             child: Container(
               child: Center(
