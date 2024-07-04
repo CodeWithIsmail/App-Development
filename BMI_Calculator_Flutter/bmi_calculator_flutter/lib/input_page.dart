@@ -5,7 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'GenderSelectWidget.dart';
 import 'Reusable_Container.dart';
 import 'constants.dart';
-
+import 'result_page.dart';
+import 'bmi_info.dart';
 enum GenderType { male, female, nothing }
 
 class InputPage extends StatefulWidget {
@@ -18,7 +19,31 @@ class _InputPageState extends State<InputPage> {
   Color femaleColor = KInactivecolor;
   GenderType selectedGender = GenderType.nothing;
 
-  int feetH = 2, inchH = 2;
+  int feetH = 2, inchH = 2, weight = 50, age = 20;
+
+  void increaseWt() {
+    setState(() {
+      weight++;
+    });
+  }
+
+  void decreaseWt() {
+    setState(() {
+      weight--;
+    });
+  }
+
+  void increaseAge() {
+    setState(() {
+      age++;
+    });
+  }
+
+  void decreaseAge() {
+    setState(() {
+      age--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +70,7 @@ class _InputPageState extends State<InputPage> {
                     },
                     child: Reusable_Container(
                       color: selectedGender == GenderType.male
-                          ? KLllCardColor
+                          ? KAllCardColor
                           : KInactivecolor,
                       childWidget:
                           GenderSelectWidget(FontAwesomeIcons.mars, 'MALE'),
@@ -62,7 +87,7 @@ class _InputPageState extends State<InputPage> {
                     },
                     child: Reusable_Container(
                       color: selectedGender == GenderType.female
-                          ? KLllCardColor
+                          ? KAllCardColor
                           : KInactivecolor,
                       childWidget:
                           GenderSelectWidget(FontAwesomeIcons.venus, 'FEMALE'),
@@ -74,7 +99,7 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: Reusable_Container(
-              color: KLllCardColor,
+              color: KAllCardColor,
               childWidget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -161,24 +186,121 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: Reusable_Container(
-                    color: KLllCardColor,
+                    color: KAllCardColor,
+                    childWidget: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'WEIGHT',
+                          style: KIconTextStyle,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: KValueTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FloatingIconButton(
+                              FontAwesomeIcons.minus,
+                              decreaseWt,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FloatingIconButton(
+                              FontAwesomeIcons.plus,
+                              increaseWt,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: Reusable_Container(
-                    color: KLllCardColor,
+                    color: KAllCardColor,
+                    childWidget: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'AGE',
+                          style: KIconTextStyle,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: KValueTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FloatingIconButton(
+                              FontAwesomeIcons.minus,
+                              decreaseAge,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FloatingIconButton(
+                              FontAwesomeIcons.plus,
+                              increaseAge,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            width: double.infinity,
-            color: KLastCardColor,
-            height: 75.0,
-            margin: EdgeInsets.only(top: 10),
+          GestureDetector(
+            onTap: () {
+              BMI_info bmi_find=BMI_info(feetH, inchH, weight);
+              bmi_find.getResult();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ResultPage(bmi_find)),
+              );
+            },
+            child: Container(
+              child: Center(
+                child: Text(
+                  'CALCULATE BMI',
+                  style: KSubmitText,
+                ),
+              ),
+              width: double.infinity,
+              color: KLastCardColor,
+              height: 75.0,
+              margin: EdgeInsets.only(top: 10),
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class FloatingIconButton extends StatelessWidget {
+  final IconData iconData;
+  final VoidCallback onPress;
+
+  FloatingIconButton(this.iconData, this.onPress);
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      constraints: BoxConstraints.tightFor(
+        height: 56,
+        width: 56,
+      ),
+      onPressed: onPress,
+      fillColor: floatButtonColor,
+      shape: CircleBorder(),
+      child: Icon(
+        iconData,
       ),
     );
   }
