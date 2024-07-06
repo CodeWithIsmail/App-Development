@@ -12,7 +12,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: Text(
+
           'HealthTracker',
         ),
         actions: [
@@ -32,20 +34,26 @@ class HomePage extends StatelessWidget {
         children: [
           Expanded(
             flex: 4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'WELCOME',
-                  textAlign: TextAlign.center,
-                  style: KWelcomeText,
-                ),
-                Text(
-                  'Ismail Hossain',
-                  style: KNameText,
-                  textAlign: TextAlign.center,
-                ),
-              ],
+            child: Card(
+              color: Colors.lightGreenAccent.shade100,
+              margin: EdgeInsets.all(15),
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'WELCOME',
+                    textAlign: TextAlign.center,
+                    style: KWelcomeText,
+                  ),
+                  Text(
+                    'Ismail Hossain',
+                    style: KNameText,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(

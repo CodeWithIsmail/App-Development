@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:check_weather/constants.dart';
+import 'package:check_weather/services/location.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'constants.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -17,48 +16,42 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  double latitude=0.0,longitue=0.0;
+  String locationMessage = 'Checking location...';
+
+  void getLoc() async {
+    GetLocation getLocation = GetLocation();
+    await getLocation.initLocation();
+    // print(getLocation.latitude);
+    setState(() {
+      locationMessage =
+          'Current Position: \nLatitude: ${getLocation.latitude}, \nLongitude: ${getLocation.longitude}';
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLoc();
+  }
+
+  void getDataFromNet()
+  {
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Check Weather',
-            style: KAppBarTextStyle,
+          title: Text('Check Weather'),
+        ),
+        body: Center(
+          child: Text(
+            locationMessage,
             textAlign: TextAlign.center,
           ),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            TextButton(
-              onPressed: () async {
-                Position position = await Geolocator.getCurrentPosition(
-                    desiredAccuracy: LocationAccuracy.high);
-
-                print(position);
-
-                setState(() {
-                  latitude=position.latitude;
-                  longitue=position.longitude;
-                });
-              },
-              child: Text('GET LOCATION',style: KAppBarTextStyle,),
-            ),
-            Text(
-              textAlign: TextAlign.center,
-              'Laitude: $latitude',
-              style: KAppBarTextStyle,
-            ),
-            Text(
-              textAlign: TextAlign.center,
-              'Longitude: $longitue',
-              style: KAppBarTextStyle,
-            ),
-          ],
         ),
       ),
     );

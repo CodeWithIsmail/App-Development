@@ -32,6 +32,8 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.blue.shade300,
           centerTitle: true,
           titleTextStyle: KAppBarTextStyle,
+
+          // color: Colors.lightGreenAccent,
         ),
       ),
       // home: HomePage(),

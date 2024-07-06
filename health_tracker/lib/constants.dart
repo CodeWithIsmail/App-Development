@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const KAppBarTextStyle = TextStyle(
   fontSize: 25,
   fontWeight: FontWeight.bold,
-  letterSpacing: 2,
+  letterSpacing: 1.5,
   color: Colors.black,
 );
 
@@ -14,14 +14,15 @@ const KHomeIconText = TextStyle(
 );
 
 const KWelcomeText = TextStyle(
-  fontSize: 35,
+  fontSize: 30,
   fontWeight: FontWeight.bold,
-  color: Colors.blueGrey,
+  color: Colors.black,
+  fontFamily: 'Newfont',
 );
 
 const KNameText = TextStyle(
   fontFamily: 'Playwrite',
-  fontSize: 40,
+  fontSize: 37,
   fontWeight: FontWeight.bold,
   color: Colors.purple,
 );
