@@ -28,12 +28,20 @@ class _CityScreenState extends State<CityScreen> {
                   child: Icon(
                     Icons.arrow_back_ios,
                     size: 50.0,
+                    color: Colors.white,
                   ),
                 ),
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
                 child: null,
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                child: TextField(
+                  decoration: TextFieldDeco,
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
               TextButton(
                 onPressed: () {},
