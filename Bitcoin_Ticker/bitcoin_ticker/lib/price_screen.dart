@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'coin_data.dart';
 import 'dart:io' show Platform;
+import 'package:bitcoin_ticker/CurrencyCard.dart';
 
 class PriceScreen extends StatefulWidget {
   @override
@@ -12,6 +13,23 @@ class PriceScreen extends StatefulWidget {
 
 class _PriceScreenState extends State<PriceScreen> {
   String bitSelected = "Select Unit";
+  String rate1 = ' ? ';
+  String rate2 = ' ? ';
+  String rate3 = ' ? ';
+  String currency = ' ';
+
+  void updateUI(String value) async {
+    double rt1 = await CoinData().getConvert(value, 'BTC');
+    double rt2 = await CoinData().getConvert(value, 'ETH');
+    double rt3 = await CoinData().getConvert(value, 'LTC');
+    setState(() {
+      bitSelected = value;
+      rate1 = rt1.toStringAsFixed(3);
+      rate2 = rt2.toStringAsFixed(3);
+      rate3 = rt3.toStringAsFixed(3);
+      currency = bitSelected;
+    });
+  }
 
   DropdownButton AndroidDropDown() {
     List<DropdownMenuItem<String>> allCurrency = [];
@@ -28,11 +46,8 @@ class _PriceScreenState extends State<PriceScreen> {
     return DropdownButton(
       hint: Text(bitSelected),
       items: allCurrency,
-      onChanged: (value) {
-        setState(() {
-          bitSelected = value!;
-          print(bitSelected);
-        });
+      onChanged: (value) async {
+        updateUI(value);
       },
     );
   }
@@ -47,8 +62,8 @@ class _PriceScreenState extends State<PriceScreen> {
     }
     return CupertinoPicker(
       itemExtent: 35,
-      onSelectedItemChanged: (value) {
-        print(currenciesList[value]);
+      onSelectedItemChanged: (value) async {
+        updateUI(currenciesList[value]);
       },
       children: allCurrency,
     );
@@ -64,27 +79,9 @@ class _PriceScreenState extends State<PriceScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0),
-            child: Card(
-              color: Colors.lightBlueAccent,
-              elevation: 5.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 28.0),
-                child: Text(
-                  '1 BTC = ? USD',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          CurrencyCard(rate1, currency, 'BTC'),
+          CurrencyCard(rate2, currency, 'ETH'),
+          CurrencyCard(rate3, currency, 'LTC'),
           Container(
             height: 150.0,
             alignment: Alignment.center,
@@ -97,3 +94,4 @@ class _PriceScreenState extends State<PriceScreen> {
     );
   }
 }
+
