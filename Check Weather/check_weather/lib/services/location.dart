@@ -7,7 +7,13 @@ class GetLocation {
   Future<void> initLocation() async {
     try {
       Position position = await _determinePosition();
+      print("here");
+      print(position.latitude);
+      print(position.longitude);
+      // print("hellooo");
       // print(position);
+      // print(position.speed);
+      // print(position.heading);
       latitude = position.latitude;
       longitude = position.longitude;
     } catch (e) {
