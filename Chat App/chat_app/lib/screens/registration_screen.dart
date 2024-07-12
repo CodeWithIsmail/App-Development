@@ -1,4 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:chat_app/constants.dart';
+import 'chat_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -6,6 +11,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  final _auth = FirebaseAuth.instance;
+  String email = '', password = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +32,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 48.0,
             ),
             TextField(
+              keyboardType: TextInputType.emailAddress,
+              textAlign: TextAlign.center,
               onChanged: (value) {
+                email = value;
+                print(email);
                 //Do something with the user input.
               },
               decoration: InputDecoration(
@@ -48,7 +60,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 8.0,
             ),
             TextField(
+              obscureText: true,
+              textAlign: TextAlign.center,
               onChanged: (value) {
+                password = value;
+                print(password);
                 //Do something with the user input.
               },
               decoration: InputDecoration(
@@ -78,7 +94,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 elevation: 5.0,
                 child: MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    try {
+                      final newUser =
+                          await _auth.createUserWithEmailAndPassword(
+                              email: email, password: password);
+
+                      if(newUser!=null)
+                        Navigator.pushNamed(context, DefinedString.chat);
+                    } catch (e) {
+                      print(e);
+                      // TODO
+                    }
                     //Implement registration functionality.
                   },
                   minWidth: 200.0,
