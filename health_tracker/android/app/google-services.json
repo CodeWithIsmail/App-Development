@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "980956486577",
+    "project_id": "health-tracker-1a898",
+    "storage_bucket": "health-tracker-1a898.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980956486577:android:7298016a678d7bce02bb90",
+        "android_client_info": {
+          "package_name": "com.example.health_tracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxr6-8qVcYj1UDo9_M-23snBjco06kaRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
