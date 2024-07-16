@@ -2,20 +2,44 @@
 
 import 'package:crud/all.dart';
 
-class Register extends StatelessWidget {
-  const Register({super.key});
+class Register extends StatefulWidget {
+  void Function()? togglefunction;
 
-  void regi() {}
+  Register(this.togglefunction);
+
+  @override
+  State<Register> createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  final _auth = FirebaseAuth.instance;
+  TextEditingController name = TextEditingController();
+  TextEditingController uname = TextEditingController();
+  TextEditingController pass = TextEditingController();
+  TextEditingController conpass = TextEditingController();
+
+  void regi() async {
+    try {
+      if (pass.text != conpass.text) {
+        CustomToast('Password don\'t match').ShowToast();
+      } else {
+        final newUser = await _auth.createUserWithEmailAndPassword(
+            email: uname.text.toLowerCase() + '@quicknote.com',
+            password: pass.text);
+        if (newUser != null) {
+          Navigator.pushNamed(context, PageName.home);
+        } else {}
+      }
+    } on FirebaseAuthException catch (e) {
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController name = TextEditingController();
-    TextEditingController uname = TextEditingController();
-    TextEditingController pass = TextEditingController();
-    TextEditingController conpass = TextEditingController();
-
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.only(top: 55),
         decoration: BoxDecoration(
           gradient: gradient,
         ),
@@ -51,7 +75,7 @@ class Register extends StatelessWidget {
                             Colors.grey.shade100,
                             14,
                             true,
-                            () => Navigator.pushNamed(context, PageName.log),
+                            widget.togglefunction,
                           ),
                         ],
                       )

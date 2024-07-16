@@ -52,7 +52,7 @@ final gradient = LinearGradient(
 );
 
 class PageName {
-  static final log = 'log';
-  static final reg = 'reg';
+
   static final home = 'home';
+  static final log_or_regi = 'log_or_regi';
 }
