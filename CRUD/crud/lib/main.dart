@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: PageName.log_or_regi,
+      home: AuthWrapper(),
+      // initialRoute: PageName.log_or_regi,
       routes: allPageRoute,
     );
   }

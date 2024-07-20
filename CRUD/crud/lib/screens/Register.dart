@@ -26,13 +26,21 @@ class _RegisterState extends State<Register> {
         final newUser = await _auth.createUserWithEmailAndPassword(
             email: uname.text.toLowerCase() + '@quicknote.com',
             password: pass.text);
+        String email = uname.text.toLowerCase();
+
         if (newUser != null) {
-          Navigator.pushNamed(context, PageName.home);
+          FirestoreService firestoreService = FirestoreService(email);
+          // Navigator.pushNamed(context, PageName.home);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(firestoreService),
+            ),
+          );
+          // Navigator.pushNamed(context, PageName.home);
         } else {}
       }
-    } on FirebaseAuthException catch (e) {
-
-    }
+    } on FirebaseAuthException catch (e) {}
   }
 
   @override

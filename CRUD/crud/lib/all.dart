@@ -17,3 +17,4 @@ export 'helper/LogOrRegi.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:fluttertoast/fluttertoast.dart';
 export 'custom/CustomToast.dart';
+export 'package:crud/AuthIdentify.dart';

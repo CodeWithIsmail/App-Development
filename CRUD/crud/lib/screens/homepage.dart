@@ -6,7 +6,9 @@ import 'package:crud/services/firestore.dart';
 import '../custom/constants.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  FirestoreService firestoreService;
+
+  HomePage(this.firestoreService);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -14,7 +16,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController noteController = TextEditingController();
-  FirestoreService firestoreService = FirestoreService();
+
+  // FirestoreService firestoreService = FirestoreService(username);
 
   void showMyDialog(String? id, String title) {
     showDialog(
@@ -35,9 +38,9 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 if (noteController.text == '') return;
                 if (id == null)
-                  firestoreService.addNote(noteController.text);
+                  widget.firestoreService.addNote(noteController.text);
                 else
-                  firestoreService.updateNote(noteController.text, id);
+                  widget.firestoreService.updateNote(noteController.text, id);
                 noteController.clear();
                 Navigator.of(context).pop();
               },
@@ -69,13 +72,31 @@ class _HomePageState extends State<HomePage> {
         title: Text(
           'Note App',
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 30),
+            child: GestureDetector(
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.pushNamed(context, PageName.log_or_regi);
+
+                // Navigator.pop(context);
+                // LoginOrRegistration();
+              },
+              child: Icon(
+                Icons.logout_rounded,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: gradientBackGroundColor,
         ),
         child: StreamBuilder<QuerySnapshot>(
-          stream: firestoreService.getNotes(),
+          stream: widget.firestoreService.getNotes(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List notesList = snapshot.data!.docs;
@@ -92,7 +113,8 @@ class _HomePageState extends State<HomePage> {
                   String time = data['time'].toString();
 
                   return Padding(
-                    padding: const EdgeInsets.only(top:15,left: 12,right: 12),
+                    padding:
+                        const EdgeInsets.only(top: 15, left: 12, right: 12),
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
@@ -122,7 +144,8 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
-                                onTap: () => firestoreService.deleteNode(id),
+                                onTap: () =>
+                                    widget.firestoreService.deleteNode(id),
                                 child: Icon(
                                   Icons.delete,
                                   color: Colors.white,

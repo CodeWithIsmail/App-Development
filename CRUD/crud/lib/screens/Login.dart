@@ -21,10 +21,21 @@ class _LoginState extends State<Login> {
 
   void login() async {
     try {
+      String email = uname.text.toLowerCase();
       final currentUser = await _auth.signInWithEmailAndPassword(
           email: uname.text.toLowerCase() + '@quicknote.com',
           password: pass.text);
-      if (currentUser != null) Navigator.pushNamed(context, PageName.home);
+      if (currentUser != null) {
+        FirestoreService firestoreService = FirestoreService(email);
+        // Navigator.pushNamed(context, PageName.home);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(firestoreService),
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':

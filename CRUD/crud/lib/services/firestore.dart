@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 class FirestoreService {
-  final CollectionReference notes =
-      FirebaseFirestore.instance.collection('notes');
+  final String collectionName;
+
+  FirestoreService(this.collectionName);
 
   Future<void> addNote(String note) {
+    final CollectionReference notes =
+        FirebaseFirestore.instance.collection(this.collectionName);
     return notes.add(
       {
         'note': note,
@@ -15,6 +18,8 @@ class FirestoreService {
   }
 
   Future<void> updateNote(String note, String id) {
+    final CollectionReference notes =
+    FirebaseFirestore.instance.collection(this.collectionName);
     return notes.doc(id).update(
       {
         'note': note,
@@ -24,10 +29,14 @@ class FirestoreService {
   }
 
   Future<void> deleteNode(String id) {
+    final CollectionReference notes =
+    FirebaseFirestore.instance.collection(this.collectionName);
     return notes.doc(id).delete();
   }
 
   Stream<QuerySnapshot> getNotes() {
+    final CollectionReference notes =
+    FirebaseFirestore.instance.collection(this.collectionName);
     return notes.orderBy('time', descending: true).snapshots();
   }
 }
