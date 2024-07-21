@@ -1,4 +1,4 @@
-import 'all.dart';
+import '../ImportAll.dart';
 
 List<Map<String, dynamic>> TransactionData = [
   {

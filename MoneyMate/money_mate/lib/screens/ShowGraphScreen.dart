@@ -1,4 +1,4 @@
-import 'all.dart';
+import '../ImportAll.dart';
 
 class Showgraph extends StatelessWidget {
   const Showgraph({super.key});

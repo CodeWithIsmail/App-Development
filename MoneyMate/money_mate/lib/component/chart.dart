@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'all.dart';
+import '../ImportAll.dart';
 
 class MyChart extends StatefulWidget {
   const MyChart({super.key});

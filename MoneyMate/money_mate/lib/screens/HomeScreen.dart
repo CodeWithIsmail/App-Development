@@ -1,10 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
-
-import 'all.dart';
+import '../ImportAll.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -29,7 +25,7 @@ class _HomescreenState extends State<Homescreen> {
             setState(() {
               index = value;
             });
-            print(value);
+            // print(value);
           },
           backgroundColor: Colors.white,
           showSelectedLabels: false,
@@ -55,24 +51,10 @@ class _HomescreenState extends State<Homescreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-                Theme.of(context).colorScheme.tertiary,
-              ],
-            ),
-          ),
-          child: Icon(
-            CupertinoIcons.add,
-          ),
-        ),
+        onPressed: () {
+          Navigator.pushNamed(context, RouteName.add);
+        },
+        child: CustomFloatingButton(),
         shape: CircleBorder(),
       ),
 
