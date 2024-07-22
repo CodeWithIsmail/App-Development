@@ -1,33 +1,35 @@
 import 'package:to_do_app/helper/AllFile.dart';
 
-class CustomFloatingButton extends StatefulWidget {
-  const CustomFloatingButton({super.key});
+class CustomFloatingButton extends StatelessWidget {
+  List<Task> taskList;
+  final Function AddTaskCallback;
 
-  @override
-  State<CustomFloatingButton> createState() => _CustomFloatingButtonState();
-}
+  CustomFloatingButton(this.taskList, this.AddTaskCallback);
 
-class _CustomFloatingButtonState extends State<CustomFloatingButton> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
       elevation: 5,
       backgroundColor: Colors.lightBlueAccent,
       onPressed: () {
-        setState(() {
-          showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (context) => SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(),
+        showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          builder: (context) => SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: AddTaskScreen(
+                taskList,
+                (Task newTask) {
+                  AddTaskCallback(newTask);
+                },
               ),
             ),
-          );
-          // build(context);
-        });
+          ),
+        );
+
+        // build(context);
       },
       child: Icon(
         Icons.add,

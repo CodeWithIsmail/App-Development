@@ -31,9 +31,17 @@ class _TopScreenState extends State<TopScreen> {
             'To Do',
             style: heading1style,
           ),
-          Text(
-            widget.numberOfTask.toString() + ' Tasks',
-            style: heading6style,
+          Row(
+            children: [
+              Text(
+                widget.numberOfTask.toString(),
+                style: heading6style,
+              ),
+              Text(
+                widget.numberOfTask > 1 ? ' Tasks' : 'Task',
+                style: heading6style,
+              ),
+            ],
           ),
         ],
       ),

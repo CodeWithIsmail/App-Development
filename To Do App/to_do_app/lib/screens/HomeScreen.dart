@@ -9,11 +9,23 @@ class Todoscreen extends StatefulWidget {
 }
 
 class _TodoscreenState extends State<Todoscreen> {
+  List<Task> tasks = [
+    Task('app dev', 'done todoapp', false),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
-      floatingActionButton: CustomFloatingButton(),
+      floatingActionButton: CustomFloatingButton(
+        tasks,
+        (Task newTask) {
+          print('main: ' + newTask.title);
+          setState(() {
+            tasks.add(newTask);
+          });
+        },
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -22,7 +34,7 @@ class _TodoscreenState extends State<Todoscreen> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 17),
               decoration: listDecoration,
-              child: TaskListScreen(),
+              child: TaskListScreen(tasks),
             ),
           ),
         ],
@@ -30,4 +42,3 @@ class _TodoscreenState extends State<Todoscreen> {
     );
   }
 }
-

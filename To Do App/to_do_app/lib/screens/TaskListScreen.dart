@@ -1,7 +1,9 @@
 import 'package:to_do_app/helper/AllFile.dart';
 
 class TaskListScreen extends StatefulWidget {
-  const TaskListScreen({super.key});
+  List<Task> taskList;
+
+  TaskListScreen(this.taskList);
 
   @override
   State<TaskListScreen> createState() => _TaskListScreenState();
@@ -13,14 +15,14 @@ class _TaskListScreenState extends State<TaskListScreen> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return CustomListTile(
-            tasks[index].title, tasks[index].subtitle, tasks[index].stateValue,
+            widget.taskList[index].title,  widget.taskList[index].subtitle,  widget.taskList[index].stateValue,
                 (current) {
               setState(() {
-                tasks[index].toogleState();
+                widget.taskList[index].toogleState();
               });
             });
       },
-      itemCount: tasks.length,
+      itemCount:  widget.taskList.length,
     );
   }
 }

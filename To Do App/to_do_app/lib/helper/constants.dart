@@ -28,3 +28,8 @@ const listDecoration=BoxDecoration(
     topRight: Radius.circular(25),
   ),
 );
+
+const AddButtonStyle=BoxDecoration(
+  color: Colors.blue,
+  borderRadius: BorderRadius.all(Radius.circular(30)),
+);

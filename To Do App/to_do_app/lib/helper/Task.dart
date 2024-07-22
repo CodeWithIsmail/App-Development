@@ -10,6 +10,6 @@ class Task {
   }
 }
 
-List<Task> tasks = [
-  Task('app dev', 'done todoapp', false),
-];
+// List<Task> tasks = [
+//   Task('app dev', 'done todoapp', false),
+// ];
