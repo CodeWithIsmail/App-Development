@@ -89,31 +89,50 @@ const DashboardGradient = LinearGradient(
   transform: GradientRotation(pi / 4),
 );
 
-final DashboardShadow=BoxShadow(
+final DashboardShadow = BoxShadow(
   color: Colors.grey.shade500,
   offset: Offset(5, 5),
   blurRadius: 10,
 );
 
-final expenseTileDecoration=BoxDecoration(
-  boxShadow: [
-    BoxShadow(
-      color: Colors.grey.shade300,
-      offset: Offset(5, 5),
-      blurRadius: 2,
-    ),
-  ],
+final expenseTileDecoration = BoxDecoration(
   borderRadius: BorderRadius.circular(15),
   color: Colors.white,
+  boxShadow: [
+    BoxShadow(
+      color: Colors.grey.shade400,
+      offset: Offset(1, 3),
+      blurRadius: 5,
+    ),
+  ],
 );
 
-final colorList=ColorScheme.light(
+final colorList = ColorScheme.light(
   background: Colors.grey.shade100,
   onBackground: Colors.black,
   primary: Color(0xFF355C7D),
   secondary: Color(0xFF6C5B7B),
   tertiary: Color(0xFFC06C84),
 );
+final barGradient = LinearGradient(
+  colors: [
+    Color(0xFF355C7D),
+    Color(0xFF6C5B7B),
+    Color(0xFFC06C84),
+  ],
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+);
 
+final barChartLeftStyle = TextStyle(
+  color: Colors.grey,
+  fontWeight: FontWeight.bold,
+  fontSize: 14,
+);
+final barChartBottomStyle = TextStyle(
+  color: Colors.grey,
+  fontWeight: FontWeight.bold,
+  fontSize: 7,
+);
 const selectColor = Colors.lightBlueAccent;
 const unselectColor = Colors.grey;

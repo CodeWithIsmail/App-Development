@@ -2,14 +2,14 @@
 
 import '../ImportAll.dart';
 
-class MyChart extends StatefulWidget {
-  const MyChart({super.key});
+class MyChart2 extends StatefulWidget {
+  const MyChart2({super.key});
 
   @override
-  State<MyChart> createState() => _MyChartState();
+  State<MyChart2> createState() => _MyChart2State();
 }
 
-class _MyChartState extends State<MyChart> {
+class _MyChart2State extends State<MyChart2> {
   @override
   Widget build(BuildContext context) {
     return BarChart(
@@ -19,14 +19,14 @@ class _MyChartState extends State<MyChart> {
 
   BarChartData mainBarChartData() {
     List<BarChartGroupData> barGroups = [];
-    for (int i = 0; i < day.length; i++) {
+    for (int i = 0; i < categoryExpense.length; i++) {
       barGroups.add(
         BarChartGroupData(
-          x: day[i],
+          x: i + 1,
           barRods: [
             BarChartRodData(
-              width: 10,
-              toY: val[i],
+              width: 15,
+              toY: categoryExpense[i],
               gradient: barGradient,
             )
           ],
@@ -72,11 +72,14 @@ class _MyChartState extends State<MyChart> {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    String text=value.toInt().toString();
+    String text = Category[value.toInt() - 1];
+    print(text);
+    // String text = '1';
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 2,
-      child: Text(text, style: barChartBottomStyle),
+      child:
+          Text(text,  style: barChartBottomStyle),
     );
   }
 

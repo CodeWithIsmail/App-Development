@@ -2,7 +2,10 @@ import '../ImportAll.dart';
 import 'package:intl/intl.dart' hide textDirection;
 
 class AddExpense extends StatefulWidget {
-  const AddExpense({super.key});
+  // List<Map<String, dynamic>> TransactionData;
+  final Function AddCallBack;
+
+  AddExpense(this.AddCallBack);
 
   @override
   State<AddExpense> createState() => _AddExpenseState();
@@ -226,7 +229,40 @@ class _AddExpenseState extends State<AddExpense> {
                     style: TextButton.styleFrom(
                         // backgroundColor: Colors.black,
                         ),
-                    onPressed: () {},
+                    onPressed: () {
+                      widget.AddCallBack(
+                        Record(
+                          ExpenseDropDownText,
+                          dateCon.text,
+                          amountCon.text.toString(),
+                          LinearGradient(
+                            colors: [
+                              Colors.pinkAccent.withOpacity(1.0),
+                              Colors.pinkAccent.withOpacity(0.6),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.burger,
+                            color: Colors.white,
+                          ),
+                        ),
+                      );
+
+                      // TransactionData.add({
+                      //   'color': ,
+                      //   'icon': ,
+                      //   'name': ,
+                      //   'amount': ,
+                      //   'date': ,
+                      // });
+
+                      // print(widget.TransactionData.length);
+                      Navigator.pop(context);
+
+                      // initState();
+                    },
                     child: Text(
                       'Save',
                       style: TextStyle(

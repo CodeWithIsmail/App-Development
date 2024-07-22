@@ -3,7 +3,10 @@
 import '../ImportAll.dart';
 
 class Mainscreen extends StatelessWidget {
-  const Mainscreen({super.key});
+  List<Record> TransactionData;
+
+
+   Mainscreen(this.TransactionData);
 
   @override
   Widget build(BuildContext context) {
@@ -75,16 +78,16 @@ class Mainscreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Expenses',
+                  'Transactions',
                   style: ExpensesTextStyle,
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Text(
-                    'View All',
-                    style: ViewAllTextStyle,
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {},
+                //   child: Text(
+                //     'View All',
+                //     style: ViewAllTextStyle,
+                //   ),
+                // ),
               ],
             ),
             SizedBox(
@@ -95,32 +98,34 @@ class Mainscreen extends StatelessWidget {
                 itemCount: TransactionData.length,
                 itemBuilder: (context, int i) {
                   return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    padding: const EdgeInsets.only(
+                        bottom: 7, top: 7, left: 5, right: 5),
                     child: Container(
                       decoration: expenseTileDecoration,
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
+
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    gradient: TransactionData[i]['color'],
+                                    gradient: TransactionData[i].linearGradient,
                                     shape: BoxShape.circle,
                                   ),
-                                  width: 55,
-                                  height: 55,
+                                  width: 45,
+                                  height: 45,
                                   alignment: Alignment.center,
-                                  child: TransactionData[i]['icon'],
+                                  child: TransactionData[i].faIcon,
                                 ),
                                 SizedBox(
                                   width: 10,
                                 ),
                                 Text(
-                                  TransactionData[i]['name'],
+                                  TransactionData[i].name,
                                   style: ExpenseTitleTextStyle,
                                 ),
                               ],
@@ -129,10 +134,10 @@ class Mainscreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  TransactionData[i]['amount'],
+                                  TransactionData[i].amount,
                                   style: ExpenseValTextStyle,
                                 ),
-                                Text(TransactionData[i]['date'],
+                                Text(TransactionData[i].date,
                                     style: ExpenseDayTextStyle),
                               ],
                             ),

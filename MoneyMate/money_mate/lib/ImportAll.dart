@@ -17,6 +17,7 @@ export 'helper/data.dart';
 
 // component
 export 'component/chart.dart';
+export 'component/chart2.dart';
 export 'component/MoneyDashboard.dart';
 
 // custom

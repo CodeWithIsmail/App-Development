@@ -3,7 +3,10 @@
 import '../ImportAll.dart';
 
 class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+  List<Record> TransactionData;
+
+
+  Homescreen(this.TransactionData);
 
   @override
   State<Homescreen> createState() => _HomescreenState();
@@ -11,6 +14,8 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   int index = 0;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +57,17 @@ class _HomescreenState extends State<Homescreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, RouteName.add);
+          setState(() {
+            Navigator.pushNamed(context, RouteName.add);
+          });
+
+          //
         },
         child: CustomFloatingButton(),
         shape: CircleBorder(),
       ),
 
-      body: index == 0 ? Mainscreen() : Showgraph(),
+      body: index == 0 ? Mainscreen(widget.TransactionData) : Showgraph(),
     );
   }
 }
