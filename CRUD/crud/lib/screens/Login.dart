@@ -56,9 +56,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(top: 55),
-        decoration: BoxDecoration(
-          gradient: gradient,
-        ),
+        decoration: BoxDecoration(gradient: gradient),
         child: Center(
           child: SingleChildScrollView(
             child: Column(

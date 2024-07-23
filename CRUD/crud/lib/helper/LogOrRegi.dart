@@ -20,8 +20,7 @@ class _LoginOrRegistrationState extends State<LoginOrRegistration> {
   Widget build(BuildContext context) {
     if (loginpage) {
       return Login(togglepage);
-    }
-    else {
+    } else {
       return Register(togglepage);
     }
   }

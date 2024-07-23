@@ -52,7 +52,7 @@ class Showgraph extends StatelessWidget {
                 height: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
                   child: MyChart2(),
                 ),
               ),

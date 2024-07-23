@@ -14,6 +14,4 @@ class AppIcon extends StatelessWidget {
       ],
     );
   }
-
-
 }
