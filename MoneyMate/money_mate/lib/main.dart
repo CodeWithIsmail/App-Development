@@ -1,7 +1,11 @@
 import 'ImportAll.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,7 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Expense Tracker',
       theme: ThemeData(colorScheme: colorList),
-      initialRoute: RouteName.home,
+      home: AuthWrapper(),
+
+      // initialRoute: RouteName.home,
       routes: allPageRoute,
     );
   }

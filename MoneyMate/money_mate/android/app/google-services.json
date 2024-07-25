@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "433715484094",
+    "project_id": "moneymate-bfd49",
+    "storage_bucket": "moneymate-bfd49.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433715484094:android:8b12607d99c456cb7395ef",
+        "android_client_info": {
+          "package_name": "com.example.money_mate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3mpi5TQN84L0-nbY1Gwr04EEHxeVGh9w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

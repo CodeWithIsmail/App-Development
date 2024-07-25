@@ -3,10 +3,9 @@
 import '../ImportAll.dart';
 
 class Homescreen extends StatefulWidget {
-  List<Record> TransactionData;
+  FirestoreService firestoreService;
 
-
-  Homescreen(this.TransactionData);
+  Homescreen(this.firestoreService);
 
   @override
   State<Homescreen> createState() => _HomescreenState();
@@ -14,8 +13,6 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   int index = 0;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,17 +54,18 @@ class _HomescreenState extends State<Homescreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            Navigator.pushNamed(context, RouteName.add);
-          });
-
-          //
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddExpense(widget.firestoreService),
+            ),
+          );
         },
         child: CustomFloatingButton(),
         shape: CircleBorder(),
       ),
 
-      body: index == 0 ? Mainscreen(widget.TransactionData) : Showgraph(),
+      body: index == 0 ? Mainscreen(widget.firestoreService) : Showgraph(),
     );
   }
 }

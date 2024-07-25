@@ -5,7 +5,7 @@ class RouteName {
   static final home = 'homescreen';
 }
 
-List<Record> Transaction = [
+List<Record> TransactionData = [
   Record(
     'Shopping',
     'Today',
@@ -26,11 +26,11 @@ List<Record> Transaction = [
 ];
 
 final Map<String, WidgetBuilder> allPageRoute = {
-  RouteName.add: (context) => AddExpense(
-        (newRecord) {
-          Transaction.add(newRecord);
-// print(newRecord.name + ' , ' + newRecord.date);
-        },
-      ),
-  RouteName.home: (context) => Homescreen(Transaction),
+  // RouteName.add: (context) => AddExpense(),
+//         (newRecord) {
+//           Transaction.add(newRecord);
+// // print(newRecord.name + ' , ' + newRecord.date);
+//         },
+//       ),
+//   RouteName.home: (context) => Homescreen(),
 };

@@ -2,12 +2,16 @@
 
 import '../ImportAll.dart';
 
-class Mainscreen extends StatelessWidget {
-  List<Record> TransactionData;
+class Mainscreen extends StatefulWidget {
+  FirestoreService firestoreService;
 
+  Mainscreen(this.firestoreService);
 
-   Mainscreen(this.TransactionData);
+  @override
+  State<Mainscreen> createState() => _MainscreenState();
+}
 
+class _MainscreenState extends State<Mainscreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -94,57 +98,86 @@ class Mainscreen extends StatelessWidget {
               height: 10,
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: TransactionData.length,
-                itemBuilder: (context, int i) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 7, top: 7, left: 5, right: 5),
-                    child: Container(
-                      decoration: expenseTileDecoration,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: widget.firestoreService.getRecords(),
+                builder: (context, snapshot) {
+                  // if (snapshot.hasError) {
+                  //   return Center(child: Text('An error occurred!'));
+                  // }
+                  //
+                  // if (snapshot.connectionState == ConnectionState.waiting) {
+                  //   return Center(child: CircularProgressIndicator());
+                  // }
 
+                  if (!snapshot.hasData) {
+                    return Center(child: Text('No records found.'));
+                  }
+
+                  List transactionList = snapshot.data!.docs;
+                  return ListView.builder(
+                    itemCount: transactionList.length,
+                    itemBuilder: (context, int index) {
+                      DocumentSnapshot document = transactionList[index];
+                      String id = document.id;
+
+                      Map<String, dynamic> data =
+                          document.data() as Map<String, dynamic>;
+
+                      String Transaction_type = data['Transaction_type'];
+                      String Category = data['Category'];
+                      String amount = data['Amount'].toString();
+                      String date = data['date'];
+
+                      print(Category + ',' + date);
+
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 7, top: 7, left: 5, right: 5),
+                        child: Container(
+                          decoration: expenseTileDecoration,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    gradient: TransactionData[i].linearGradient,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  width: 45,
-                                  height: 45,
-                                  alignment: Alignment.center,
-                                  child: TransactionData[i].faIcon,
+                                Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        gradient: ColorMap[Category],
+                                        shape: BoxShape.circle,
+                                      ),
+                                      width: 45,
+                                      height: 45,
+                                      alignment: Alignment.center,
+                                      child: IconMap[Category],
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      Category,
+                                      style: ExpenseTitleTextStyle,
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  TransactionData[i].name,
-                                  style: ExpenseTitleTextStyle,
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      amount,
+                                      style: ExpenseValTextStyle,
+                                    ),
+                                    Text(date, style: ExpenseDayTextStyle),
+                                  ],
                                 ),
                               ],
                             ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  TransactionData[i].amount,
-                                  style: ExpenseValTextStyle,
-                                ),
-                                Text(TransactionData[i].date,
-                                    style: ExpenseDayTextStyle),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   );
                 },
               ),

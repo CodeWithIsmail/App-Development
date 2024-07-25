@@ -3,9 +3,9 @@ import 'package:intl/intl.dart' hide textDirection;
 
 class AddExpense extends StatefulWidget {
   // List<Map<String, dynamic>> TransactionData;
-  final Function AddCallBack;
+  FirestoreService firestoreService;
 
-  AddExpense(this.AddCallBack);
+  AddExpense(this.firestoreService);
 
   @override
   State<AddExpense> createState() => _AddExpenseState();
@@ -13,7 +13,6 @@ class AddExpense extends StatefulWidget {
 
 class _AddExpenseState extends State<AddExpense> {
   TextEditingController amountCon = TextEditingController();
-  TextEditingController categoryCon = TextEditingController();
   TextEditingController dateCon = TextEditingController();
   DateTime selected = DateTime.now();
 
@@ -230,25 +229,37 @@ class _AddExpenseState extends State<AddExpense> {
                         // backgroundColor: Colors.black,
                         ),
                     onPressed: () {
-                      widget.AddCallBack(
-                        Record(
-                          ExpenseDropDownText,
-                          dateCon.text,
-                          amountCon.text.toString(),
-                          LinearGradient(
-                            colors: [
-                              Colors.pinkAccent.withOpacity(1.0),
-                              Colors.pinkAccent.withOpacity(0.6),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          FaIcon(
-                            FontAwesomeIcons.burger,
-                            color: Colors.white,
-                          ),
-                        ),
-                      );
+                      String type = TransactionDropDownText;
+                      String category = ExpenseDropDownText;
+                      int amount = int.parse(amountCon.text.toString());
+                      String date = dateCon.text;
+                      print(type);
+                      print(category);
+                      print(amount);
+                      print(date);
+
+                      widget.firestoreService
+                          .addRecord(type, category, amount, date);
+
+                      // widget.AddCallBack(
+                      //   Record(
+                      //     ExpenseDropDownText,
+                      //     dateCon.text,
+                      //     amountCon.text.toString(),
+                      //     LinearGradient(
+                      //       colors: [
+                      //         Colors.pinkAccent.withOpacity(1.0),
+                      //         Colors.pinkAccent.withOpacity(0.6),
+                      //       ],
+                      //       begin: Alignment.topLeft,
+                      //       end: Alignment.bottomRight,
+                      //     ),
+                      //     FaIcon(
+                      //       FontAwesomeIcons.burger,
+                      //       color: Colors.white,
+                      //     ),
+                      //   ),
+                      // );
 
                       // TransactionData.add({
                       //   'color': ,
