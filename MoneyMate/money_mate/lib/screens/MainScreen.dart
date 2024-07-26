@@ -24,16 +24,28 @@ class _MainscreenState extends State<Mainscreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
                     children: [
-                      Text(
-                        'Welcome!',
-                        style: welcomeTextStyle,
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.grey.shade100,
+                        child: Image.asset('images/moneymate.png'),
                       ),
-                      Text(
-                        widget.firestoreService.collectionName,
-                        style: NameTextStyle,
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'MoneyMate',
+                            style: welcomeTextStyle,
+                          ),
+                          Text(
+                            widget.firestoreService.collectionName,
+                            style: NameTextStyle,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -54,9 +66,15 @@ class _MainscreenState extends State<Mainscreen> {
                           size: 23,
                         ),
                       ),
-
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => InfoScreen(),
+                            ),
+                          );
+                        },
                         icon: Icon(
                           Icons.info_outline_rounded,
                           size: 23,
@@ -78,7 +96,7 @@ class _MainscreenState extends State<Mainscreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(17.0),
-                child: MoneyDashboard(),
+                child: MoneyDashboard(widget.firestoreService),
               ),
             ),
             SizedBox(
@@ -161,30 +179,30 @@ class _MainscreenState extends State<Mainscreen> {
                                     ),
                                   ],
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                Row(
                                   children: [
-                                    Text(
-                                      amount,
-                                      style: ExpenseValTextStyle,
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          amount,
+                                          style: ExpenseValTextStyle,
+                                        ),
+                                        Text(date, style: ExpenseDayTextStyle),
+                                      ],
                                     ),
-                                    Text(date, style: ExpenseDayTextStyle),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    CircleAvatar(
+                                      radius: 15,
+                                      child: IconType[Transaction_type],
+                                      backgroundColor:
+                                          Colors.grey.withOpacity(0.2),
+                                    ),
                                   ],
                                 ),
-                                // IconButton(
-                                //   onPressed: () {},
-                                //   icon: Icon(
-                                //     Icons.edit,
-                                //     size: 15,
-                                //   ),
-                                // ),
-                                // IconButton(
-                                //   onPressed: () {},
-                                //   icon: Icon(
-                                //     Icons.delete,
-                                //     size: 15,
-                                //   ),
-                                // ),
                               ],
                             ),
                           ),

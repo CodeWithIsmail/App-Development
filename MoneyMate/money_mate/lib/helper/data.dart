@@ -16,42 +16,6 @@ class Record {
   );
 }
 
-List<int> day = [
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11,
-  12,
-  13,
-  14,
-  15,
-];
-
-List<double> val = [
-  100,
-  150,
-  50,
-  300,
-  200,
-  30,
-  20,
-  100,
-  150,
-  300,
-  100,
-  150,
-  50,
-  300,
-  200,
-];
-
 // List<Map<String, double>> categoryExpense = [
 //   {'Food': 1000},
 //   {'Shopping': 2000},
@@ -63,7 +27,6 @@ List<double> val = [
 //   {'Others': 5000},
 // ];
 
-List<double> categoryExpense = [1000, 2000, 500, 900, 300, 1000, 3000, 5000];
 List<String> Category = [
   'Shopping',
   'Food',
@@ -85,6 +48,22 @@ Map<String, Icon> IconMap = {
   'Others': Icon(FontAwesomeIcons.moneyBill, color: Colors.white),
   'Saving': Icon(FontAwesomeIcons.bank, color: Colors.white),
   'Salary': Icon(FontAwesomeIcons.dollarSign, color: Colors.white),
+  // 'Entertainment'
+};
+
+Map<String, Icon> IconType = {
+  'Income': Icon(
+    size: 20,
+    CupertinoIcons.up_arrow,
+    color: Colors.green,
+  ),
+  'Expense': Icon(
+    size: 20,
+    CupertinoIcons.down_arrow,
+    color: Colors.red,
+  ),
+
+  // 'Entertainment'
 };
 
 Map<String, LinearGradient> ColorMap = {
@@ -169,91 +148,3 @@ Map<String, LinearGradient> ColorMap = {
     end: Alignment.bottomRight,
   ),
 };
-
-// List<Map<String, dynamic>> TransactionData = [
-//   {
-//     'color': LinearGradient(
-//       colors: [
-//         Colors.pinkAccent.withOpacity(1.0), // High opacity
-//         Colors.pinkAccent.withOpacity(0.6), // Low opacity
-//       ],
-//       begin: Alignment.topLeft,
-//       end: Alignment.bottomRight,
-//     ),
-//     'icon': FaIcon(
-//       FontAwesomeIcons.burger,
-//       color: Colors.white,
-//     ),
-//     'name': 'Food',
-//     'amount': '-200',
-//     'date': 'Today'
-//   },
-//   // {
-//   //   'color': LinearGradient(
-//   //     colors: [
-//   //       Colors.purple.withOpacity(1.0), // High opacity
-//   //       Colors.purple.withOpacity(0.85), // Low opacity
-//   //     ],
-//   //     begin: Alignment.topLeft,
-//   //     end: Alignment.bottomRight,
-//   //   ),
-//   //   'icon': FaIcon(
-//   //     FontAwesomeIcons.bagShopping,
-//   //     color: Colors.white,
-//   //   ),
-//   //   'name': 'Shopping',
-//   //   'amount': '-200',
-//   //   'date': 'Today'
-//   // },
-//   // {
-//   //   'color': LinearGradient(
-//   //     colors: [
-//   //       Colors.red.withOpacity(1.0), // High opacity
-//   //       Colors.red.withOpacity(0.85), // Low opacity
-//   //     ],
-//   //     begin: Alignment.topLeft,
-//   //     end: Alignment.bottomRight,
-//   //   ),
-//   //   'icon': FaIcon(
-//   //     FontAwesomeIcons.heartCircleCheck,
-//   //     color: Colors.white,
-//   //   ),
-//   //   'name': 'Health',
-//   //   'amount': '-200',
-//   //   'date': 'Today'
-//   // },
-//   // {
-//   //   'color': LinearGradient(
-//   //     colors: [
-//   //       Colors.green.withOpacity(1.0), // High opacity
-//   //       Colors.green.withOpacity(0.85), // Low opacity
-//   //     ],
-//   //     begin: Alignment.topLeft,
-//   //     end: Alignment.bottomRight,
-//   //   ),
-//   //   'icon': FaIcon(
-//   //     FontAwesomeIcons.book,
-//   //     color: Colors.white,
-//   //   ),
-//   //   'name': 'Education',
-//   //   'amount': '-200',
-//   //   'date': 'Today'
-//   // },
-//   // {
-//   //   'color': LinearGradient(
-//   //     colors: [
-//   //       Colors.brown.withOpacity(1.0), // High opacity
-//   //       Colors.brown.withOpacity(0.85), // Low opacity
-//   //     ],
-//   //     begin: Alignment.topLeft,
-//   //     end: Alignment.bottomRight,
-//   //   ),
-//   //   'icon': FaIcon(
-//   //     FontAwesomeIcons.plane,
-//   //     color: Colors.white,
-//   //   ),
-//   //   'name': 'Travel',
-//   //   'amount': '-200',
-//   //   'date': 'Today'
-//   // },
-// ];

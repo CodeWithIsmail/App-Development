@@ -60,7 +60,7 @@ class _ShowgraphState extends State<Showgraph> {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                  child: MyChart2(),
+                  child: MyChart2(widget.firestoreService),
                 ),
               ),
             ],

@@ -31,7 +31,16 @@ class _RegisterState extends State<Register> {
 
         if (newUser != null) {
           FirestoreService firestoreService = FirestoreService(email);
-          // firestoreService./
+
+          FirebaseFirestore.instance.collection(email + 'balance').add({
+            'Net_Bal': 0,
+            'Income': initialBal.text,
+            'Expense': 0,
+          }).then((DocumentReference<Map<String, dynamic>> ref) {
+            print('Document added with ID: ${ref.id}');
+          }).catchError((error) {
+            print('Failed to add document: $error');
+          });
           // Navigator.pushNamed(context, PageName.home);
           Navigator.pushReplacement(
             context,

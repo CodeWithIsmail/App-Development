@@ -13,13 +13,11 @@ class MyChart extends StatefulWidget {
 
 class _MyChartState extends State<MyChart> {
   late Stream<Map<String, double>> _expensesStream;
-  Map<String, double> expenses = {};
 
   @override
   void initState() {
     super.initState();
     _expensesStream = getExpensesStream();
-    // fetchExpensesForLast15Days();
   }
 
   Stream<Map<String, double>> getExpensesStream() async* {
@@ -46,12 +44,6 @@ class _MyChartState extends State<MyChart> {
             doc['Transaction_type'] == 'Expense';
       }).toList();
 
-      // Reset expenses map
-      expenses = Map.fromIterable(
-        List.generate(15, (i) => now.subtract(Duration(days: 14 - i))),
-        key: (date) => dayFormat.format(date),
-        value: (date) => 0.0,
-      );
 
       for (var doc in filteredDocs) {
         DateTime docDate = dateFormat.parse(doc['date']);
@@ -64,43 +56,9 @@ class _MyChartState extends State<MyChart> {
     });
   }
 
-  // Future<void> fetchExpensesForLast15Days() async {
-  //   DateTime now = DateTime.now();
-  //   DateTime fifteenDaysAgo = now.subtract(Duration(days: 15));
-  //   DateFormat dayFormat = DateFormat('dd');
-  //   DateFormat dateFormat = DateFormat('dd-MMM-yy');
-  //   expenses.clear();
-  //   for (int i = 14; i >= 0; i--) {
-  //     DateTime date = now.subtract(Duration(days: i));
-  //     expenses[dayFormat.format(date)] = 0;
-  //   }
-  //
-  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //       .collection(widget.firestoreService.collectionName)
-  //       .get();
-  //
-  //   List<QueryDocumentSnapshot> filteredDocs = querySnapshot.docs.where((doc) {
-  //     DateTime docDate = dateFormat.parse(doc['date']);
-  //     return ((docDate.isAfter(fifteenDaysAgo) ||
-  //             docDate.isAtSameMomentAs(fifteenDaysAgo)) &&
-  //         doc['Transaction_type'] == 'Expense');
-  //   }).toList();
-  //
-  //   for (var doc in filteredDocs) {
-  //     DateTime docDate = dateFormat.parse(doc['date']);
-  //     String day = dayFormat.format(docDate);
-  //     double amount = double.tryParse(doc['Amount'].toString()) ?? 0.0;
-  //     print('$day : $amount');
-  //     expenses[day] = expenses[day]! + amount;
-  //   }
-  // }
+
 
   @override
-  // Widget build(BuildContext context) {
-  //   return BarChart(
-  //     mainBarChartData(),
-  //   );
-  // }
   Widget build(BuildContext context) {
     return StreamBuilder<Map<String, double>>(
       stream: _expensesStream,

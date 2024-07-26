@@ -25,12 +25,22 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+  flutter_svg: ^2.0.10+1
+  url_launcher: ^6.3.0
 
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - icons/
     - images/
+    - assets/
+  fonts:
+    - family: Playwrite
+      fonts:
+        - asset: fonts/PlaywriteDEGrund.ttf
+    - family: Newfont
+      fonts:
+        - asset: fonts/SpaceGrotesk-VariableFont_wght.ttf
 
 

@@ -3,37 +3,92 @@
 import '../ImportAll.dart';
 
 class MyChart2 extends StatefulWidget {
-  const MyChart2({super.key});
+  FirestoreService firestoreService;
+
+  MyChart2(this.firestoreService);
 
   @override
   State<MyChart2> createState() => _MyChart2State();
 }
 
 class _MyChart2State extends State<MyChart2> {
+  late Stream<Map<String, double>> _expensesStream;
+
+  @override
+  void initState() {
+    super.initState();
+    _expensesStream = getExpensesStream();
+  }
+
+  Stream<Map<String, double>> getExpensesStream() async* {
+    // DateTime now = DateTime.now();
+    // DateTime fifteenDaysAgo = now.subtract(Duration(days: 15));
+    // DateFormat dateFormat = DateFormat('dd-MMM-yy');
+    Map<String, double> expenses = {};
+
+    for (String category in Category) {
+      print(category);
+      expenses[category] = 0;
+    }
+
+    final collectionRef = FirebaseFirestore.instance
+        .collection(widget.firestoreService.collectionName);
+
+    yield* collectionRef.snapshots().map((querySnapshot) {
+      List<QueryDocumentSnapshot> filteredDocs =
+          querySnapshot.docs.where((doc) {
+        // DateTime docDate = dateFormat.parse(doc['date']);
+        return doc['Transaction_type'] == 'Expense';
+      }).toList();
+
+      for (var doc in filteredDocs) {
+        String cate = doc['Category'];
+        double amount = double.tryParse(doc['Amount'].toString()) ?? 0.0;
+        expenses[cate] = (expenses[cate] ?? 0) + amount;
+      }
+
+      return expenses;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BarChart(
-      mainBarChartData(),
+    return StreamBuilder<Map<String, double>>(
+      stream: _expensesStream,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No data available'));
+        } else {
+          return BarChart(
+            mainBarChartData(snapshot.data!),
+          );
+        }
+      },
     );
   }
 
-  BarChartData mainBarChartData() {
+  BarChartData mainBarChartData(Map<String, double> expenses) {
     List<BarChartGroupData> barGroups = [];
-    for (int i = 0; i < categoryExpense.length; i++) {
+
+    for (int i = 0; i < expenses.length; i++) {
       barGroups.add(
         BarChartGroupData(
-          x: i + 1,
+          x: i,
           barRods: [
             BarChartRodData(
-              width: 15,
-              toY: categoryExpense[i],
+              width: 10,
+              toY: expenses[Category[i]]!,
               gradient: barGradient,
             )
           ],
-          // showingTooltipIndicators: [0],
         ),
       );
     }
+
     return BarChartData(
       titlesData: FlTitlesData(
         show: true,
@@ -72,14 +127,11 @@ class _MyChart2State extends State<MyChart2> {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    String text = Category[value.toInt() - 1];
-    print(text);
-    // String text = '1';
+    String text = Category[value.toInt()];
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 2,
-      child:
-          Text(text,  style: barChartBottomStyle),
+      child: Text(text, style: barChartBottomStyle),
     );
   }
 

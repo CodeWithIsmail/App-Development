@@ -5,6 +5,9 @@ export 'package:flutter/cupertino.dart' hide RefreshCallback;
 export 'dart:math';
 export 'package:intl/intl.dart' hide TextDirection;
 export 'package:fluttertoast/fluttertoast.dart';
+export 'package:flutter_svg/flutter_svg.dart';
+export 'package:url_launcher/url_launcher.dart';
+
 
 // screens
 export 'screens/HomeScreen.dart';
@@ -13,6 +16,8 @@ export 'screens/AddExpenseScreen.dart';
 export 'screens/ShowGraphScreen.dart';
 export 'screens/Login.dart';
 export 'screens/Register.dart';
+export 'screens/InfoScreen.dart';
+
 
 // helper
 export 'helper/AllRoutes.dart';
