@@ -1,8 +1,15 @@
 import '../ImportAll.dart';
 
-class Showgraph extends StatelessWidget {
-  const Showgraph({super.key});
+class Showgraph extends StatefulWidget {
+  FirestoreService firestoreService;
 
+  Showgraph(this.firestoreService);
+
+  @override
+  State<Showgraph> createState() => _ShowgraphState();
+}
+
+class _ShowgraphState extends State<Showgraph> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -14,7 +21,7 @@ class Showgraph extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Category wise Expense Bar Chart',
+                'Date wise Expense Bar Chart',
                 style: TransactionTextStyle,
               ),
               SizedBox(
@@ -30,14 +37,14 @@ class Showgraph extends StatelessWidget {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                  child: MyChart(),
+                  child: MyChart(widget.firestoreService),
                 ),
               ),
               SizedBox(
                 height: 50,
               ),
               Text(
-                'Date wise Expense Bar Chart',
+                'Category wise Expense Bar Chart',
                 style: TransactionTextStyle,
               ),
               SizedBox(

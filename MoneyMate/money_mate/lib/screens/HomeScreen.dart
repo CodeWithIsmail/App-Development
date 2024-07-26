@@ -65,7 +65,7 @@ class _HomescreenState extends State<Homescreen> {
         shape: CircleBorder(),
       ),
 
-      body: index == 0 ? Mainscreen(widget.firestoreService) : Showgraph(),
+      body: index == 0 ? Mainscreen(widget.firestoreService) : Showgraph(widget.firestoreService),
     );
   }
 }

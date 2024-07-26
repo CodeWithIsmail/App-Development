@@ -72,7 +72,7 @@ const ViewAllTextStyle = TextStyle(
 
 const ExpenseTitleTextStyle = TextStyle(
   color: Colors.black,
-  fontSize: 18,
+  fontSize: 17,
   fontWeight: FontWeight.w500,
 );
 const ExpenseValTextStyle = TextStyle(

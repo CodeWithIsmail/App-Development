@@ -16,50 +16,56 @@ class _MainscreenState extends State<Mainscreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.purple.shade400,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome!',
+                        style: welcomeTextStyle,
                       ),
-                      child: Icon(
-                        CupertinoIcons.person_fill,
-                        color: Colors.white,
-                        size: 25,
+                      Text(
+                        widget.firestoreService.collectionName,
+                        style: NameTextStyle,
                       ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Welcome!',
-                          style: welcomeTextStyle,
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginOrRegistration(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.logout_outlined,
+                          size: 23,
                         ),
-                        Text(
-                          'Ismail Hossain',
-                          style: NameTextStyle,
+                      ),
+
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.info_outline_rounded,
+                          size: 23,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                Icon(
-                  CupertinoIcons.settings,
-                  size: 30,
-                ),
-              ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 15),
             Container(
@@ -71,7 +77,7 @@ class _MainscreenState extends State<Mainscreen> {
                 boxShadow: [DashboardShadow],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(17.0),
                 child: MoneyDashboard(),
               ),
             ),
@@ -85,13 +91,6 @@ class _MainscreenState extends State<Mainscreen> {
                   'Transactions',
                   style: ExpensesTextStyle,
                 ),
-                // GestureDetector(
-                //   onTap: () {},
-                //   child: Text(
-                //     'View All',
-                //     style: ViewAllTextStyle,
-                //   ),
-                // ),
               ],
             ),
             SizedBox(
@@ -101,13 +100,13 @@ class _MainscreenState extends State<Mainscreen> {
               child: StreamBuilder<QuerySnapshot>(
                 stream: widget.firestoreService.getRecords(),
                 builder: (context, snapshot) {
-                  // if (snapshot.hasError) {
-                  //   return Center(child: Text('An error occurred!'));
-                  // }
-                  //
-                  // if (snapshot.connectionState == ConnectionState.waiting) {
-                  //   return Center(child: CircularProgressIndicator());
-                  // }
+                  if (snapshot.hasError) {
+                    return Center(child: Text('An error occurred!'));
+                  }
+
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
 
                   if (!snapshot.hasData) {
                     return Center(child: Text('No records found.'));
@@ -125,14 +124,14 @@ class _MainscreenState extends State<Mainscreen> {
 
                       String Transaction_type = data['Transaction_type'];
                       String Category = data['Category'];
-                      String amount = data['Amount'].toString();
+                      String amount = data['Amount'].toString() + ' TK';
                       String date = data['date'];
 
-                      print(Category + ',' + date);
+                      // print(Category + ',' + date);
 
                       return Padding(
                         padding: const EdgeInsets.only(
-                            bottom: 7, top: 7, left: 5, right: 5),
+                            bottom: 7, top: 7, left: 4, right: 4),
                         child: Container(
                           decoration: expenseTileDecoration,
                           child: Padding(
@@ -172,6 +171,20 @@ class _MainscreenState extends State<Mainscreen> {
                                     Text(date, style: ExpenseDayTextStyle),
                                   ],
                                 ),
+                                // IconButton(
+                                //   onPressed: () {},
+                                //   icon: Icon(
+                                //     Icons.edit,
+                                //     size: 15,
+                                //   ),
+                                // ),
+                                // IconButton(
+                                //   onPressed: () {},
+                                //   icon: Icon(
+                                //     Icons.delete,
+                                //     size: 15,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
