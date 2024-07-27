@@ -30,17 +30,22 @@ class _RegisterState extends State<Register> {
         String email = uname.text.toLowerCase();
 
         if (newUser != null) {
+          DateTime now = DateTime.now();
+          DateFormat dateFormat = DateFormat('dd-MMM-yy');
+          String currentDate = dateFormat.format(now);
           FirestoreService firestoreService = FirestoreService(email);
+          firestoreService.addRecord('Income', 'Initial Balance',
+              int.parse(initialBal.text), currentDate);
 
-          FirebaseFirestore.instance.collection(email + 'balance').add({
-            'Net_Bal': 0,
-            'Income': initialBal.text,
-            'Expense': 0,
-          }).then((DocumentReference<Map<String, dynamic>> ref) {
-            print('Document added with ID: ${ref.id}');
-          }).catchError((error) {
-            print('Failed to add document: $error');
-          });
+          // FirebaseFirestore.instance.collection(email + 'balance').add({
+          //   'Net_Bal': 0,
+          //   'Income': initialBal.text,
+          //   'Expense': 0,
+          // }).then((DocumentReference<Map<String, dynamic>> ref) {
+          //   print('Document added with ID: ${ref.id}');
+          // }).catchError((error) {
+          //   print('Failed to add document: $error');
+          // });
           // Navigator.pushNamed(context, PageName.home);
           Navigator.pushReplacement(
             context,

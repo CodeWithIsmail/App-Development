@@ -28,7 +28,9 @@ class _MoneyDashboardState extends State<MoneyDashboard> {
 
     yield* collectionRef.snapshots().map((querySnapshot) {
       List<QueryDocumentSnapshot> filteredDocs = querySnapshot.docs.toList();
-
+       income = 0;
+       expense = 0;
+       netBal = 0;
       for (var doc in filteredDocs) {
         String cate = doc['Transaction_type'];
         double amount = double.tryParse(doc['Amount'].toString()) ?? 0.0;
@@ -65,7 +67,7 @@ class _MoneyDashboardState extends State<MoneyDashboard> {
   }
 
   Column customColumn(Map<String, int> Balance) {
-    print('Printing here: $Balance');
+    print(Balance['Income'].toString()+' printing in dashboard');
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

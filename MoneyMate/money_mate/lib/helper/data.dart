@@ -16,17 +16,6 @@ class Record {
   );
 }
 
-// List<Map<String, double>> categoryExpense = [
-//   {'Food': 1000},
-//   {'Shopping': 2000},
-//   {'Education': 500},
-//   {'Transport': 900},
-//   {'Health': 300},
-//   {'Travel': 1000},
-//   {'Home': 3000},
-//   {'Others': 5000},
-// ];
-
 List<String> Category = [
   'Shopping',
   'Food',
@@ -48,6 +37,7 @@ Map<String, Icon> IconMap = {
   'Others': Icon(FontAwesomeIcons.moneyBill, color: Colors.white),
   'Saving': Icon(FontAwesomeIcons.bank, color: Colors.white),
   'Salary': Icon(FontAwesomeIcons.dollarSign, color: Colors.white),
+  'Initial Balance': Icon(FontAwesomeIcons.dollarSign, color: Colors.white),
   // 'Entertainment'
 };
 
@@ -62,8 +52,6 @@ Map<String, Icon> IconType = {
     CupertinoIcons.down_arrow,
     color: Colors.red,
   ),
-
-  // 'Entertainment'
 };
 
 Map<String, LinearGradient> ColorMap = {
@@ -140,6 +128,14 @@ Map<String, LinearGradient> ColorMap = {
     end: Alignment.bottomRight,
   ),
   'Salary': LinearGradient(
+    colors: [
+      Colors.lightBlueAccent.withOpacity(1.0), // High opacity
+      Colors.lightBlueAccent.withOpacity(0.6), // Low opacity
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  ),
+  'Initial Balance': LinearGradient(
     colors: [
       Colors.lightBlueAccent.withOpacity(1.0), // High opacity
       Colors.lightBlueAccent.withOpacity(0.6), // Low opacity
