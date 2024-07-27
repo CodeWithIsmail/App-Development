@@ -57,7 +57,8 @@ class _HomescreenState extends State<Homescreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddExpense(widget.firestoreService),
+              builder: (context) => AddExpense(
+                  'Add', 'Expense', 'Food', '', '', widget.firestoreService),
             ),
           );
         },
@@ -65,7 +66,9 @@ class _HomescreenState extends State<Homescreen> {
         shape: CircleBorder(),
       ),
 
-      body: index == 0 ? Mainscreen(widget.firestoreService) : Showgraph(widget.firestoreService),
+      body: index == 0
+          ? Mainscreen(widget.firestoreService)
+          : Showgraph(widget.firestoreService),
     );
   }
 }

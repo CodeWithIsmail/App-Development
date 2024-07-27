@@ -12,11 +12,51 @@ class Mainscreen extends StatefulWidget {
 }
 
 class _MainscreenState extends State<Mainscreen> {
+  void EditOrDelete(DocumentSnapshot document) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Choose an option'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Edit'),
+              onPressed: () {
+                Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                String Transaction_type = data['Transaction_type'];
+                String Category = data['Category'];
+                String date = data['date'];
+                String amount = data['Amount'].toString() + ' TK';
+                widget.firestoreService.deleteRecord(document.id);
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddExpense('Edit', Transaction_type,
+                        Category, amount, date, widget.firestoreService),
+                  ),
+                );
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () {
+                widget.firestoreService.deleteRecord(document.id);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
         child: Column(
           children: [
             Padding(
@@ -147,63 +187,70 @@ class _MainscreenState extends State<Mainscreen> {
 
                       // print(Category + ',' + date);
 
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 7, top: 7, left: 4, right: 4),
-                        child: Container(
-                          decoration: expenseTileDecoration,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        gradient: ColorMap[Category],
-                                        shape: BoxShape.circle,
-                                      ),
-                                      width: 45,
-                                      height: 45,
-                                      alignment: Alignment.center,
-                                      child: IconMap[Category],
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      Category,
-                                      style: ExpenseTitleTextStyle,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          amount,
-                                          style: ExpenseValTextStyle,
+                      return GestureDetector(
+                        onDoubleTap: () {
+                          EditOrDelete(document);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              bottom: 7, top: 7, left: 4, right: 6),
+                          child: Container(
+                            decoration: expenseTileDecoration,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          gradient: ColorMap[Category],
+                                          shape: BoxShape.circle,
                                         ),
-                                        Text(date, style: ExpenseDayTextStyle),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    CircleAvatar(
-                                      radius: 15,
-                                      child: IconType[Transaction_type],
-                                      backgroundColor:
-                                          Colors.grey.withOpacity(0.2),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                        width: 45,
+                                        height: 45,
+                                        alignment: Alignment.center,
+                                        child: IconMap[Category],
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        Category,
+                                        style: ExpenseTitleTextStyle,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            amount,
+                                            style: ExpenseValTextStyle,
+                                          ),
+                                          Text(date,
+                                              style: ExpenseDayTextStyle),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      CircleAvatar(
+                                        radius: 15,
+                                        child: IconType[Transaction_type],
+                                        backgroundColor:
+                                            Colors.grey.withOpacity(0.2),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
