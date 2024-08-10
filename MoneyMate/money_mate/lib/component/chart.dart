@@ -3,9 +3,10 @@
 import '../ImportAll.dart';
 
 class MyChart extends StatefulWidget {
-  FirestoreService firestoreService;
+  final FirestoreService firestoreService;
+  final DateTime startdate;
 
-  MyChart(this.firestoreService);
+  MyChart(this.firestoreService, this.startdate);
 
   @override
   State<MyChart> createState() => _MyChartState();
@@ -20,9 +21,18 @@ class _MyChartState extends State<MyChart> {
     _expensesStream = getExpensesStream();
   }
 
+  @override
+  void didUpdateWidget(covariant MyChart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.startdate != widget.startdate) {
+      _expensesStream = getExpensesStream();
+    }
+  }
+
   Stream<Map<String, double>> getExpensesStream() async* {
-    DateTime now = DateTime.now();
-    DateTime fifteenDaysAgo = now.subtract(Duration(days: 15));
+    DateTime now = widget.startdate;
+    print(now);
+    DateTime fifteenDaysAgo = now.subtract(Duration(days: 14));
     DateFormat dayFormat = DateFormat('dd');
     DateFormat dateFormat = DateFormat('dd-MMM-yy');
     Map<String, double> expenses = {};
@@ -37,13 +47,12 @@ class _MyChartState extends State<MyChart> {
 
     yield* collectionRef.snapshots().map((querySnapshot) {
       List<QueryDocumentSnapshot> filteredDocs =
-          querySnapshot.docs.where((doc) {
+      querySnapshot.docs.where((doc) {
         DateTime docDate = dateFormat.parse(doc['date']);
         return (docDate.isAfter(fifteenDaysAgo) ||
-                docDate.isAtSameMomentAs(fifteenDaysAgo)) &&
+            docDate.isAtSameMomentAs(fifteenDaysAgo)) &&
             doc['Transaction_type'] == 'Expense';
       }).toList();
-
 
       for (var doc in filteredDocs) {
         DateTime docDate = dateFormat.parse(doc['date']);
@@ -55,8 +64,6 @@ class _MyChartState extends State<MyChart> {
       return expenses;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +90,7 @@ class _MyChartState extends State<MyChart> {
 
     expenses.forEach((key, value) {
       int date = int.parse(key);
-      double amount = value ?? 0;
+      double amount = value;
       print('$date : $amount');
       barGroups.add(
         BarChartGroupData(
@@ -95,7 +102,6 @@ class _MyChartState extends State<MyChart> {
               gradient: barGradient,
             )
           ],
-          // showingTooltipIndicators: [0],
         ),
       );
     });
@@ -134,6 +140,7 @@ class _MyChartState extends State<MyChart> {
         show: false,
       ),
       barGroups: barGroups,
+
     );
   }
 

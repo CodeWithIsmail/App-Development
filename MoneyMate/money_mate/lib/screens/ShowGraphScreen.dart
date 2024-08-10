@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../ImportAll.dart';
 
 class Showgraph extends StatefulWidget {
@@ -10,8 +12,24 @@ class Showgraph extends StatefulWidget {
 }
 
 class _ShowgraphState extends State<Showgraph> {
+  late DateTime endDate;
+  late DateTime startDate;
+  DateFormat dateFormat = DateFormat('dd MMM yy');
+  String stDate = "";
+  String enDate = "";
+
+  @override
+  void initState() {
+    endDate = DateTime.now();
+    startDate = endDate.subtract(Duration(days: 14));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    stDate = dateFormat.format(startDate);
+    enDate = dateFormat.format(endDate);
+    print(enDate);
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
@@ -25,7 +43,44 @@ class _ShowgraphState extends State<Showgraph> {
                 style: TransactionTextStyle,
               ),
               SizedBox(
-                height: 20,
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        endDate = endDate.subtract(Duration(days: 14));
+                        startDate = startDate.subtract(Duration(days: 14));
+                      });
+                    },
+                    icon: Icon(
+                      Icons.keyboard_arrow_left,
+                    ),
+                  ),
+                  Text('$stDate - $enDate'),
+                  IconButton(
+                    onPressed: () {
+                        DateTime temp = DateTime.now();
+                        String newTemp = dateFormat.format(temp);
+                        if (newTemp != enDate) {
+                          setState(() {
+                            endDate = endDate.add(Duration(days: 14));
+                            startDate = startDate.add(Duration(days: 14));
+                          });
+                        }
+
+                      // print(stDate);
+                    },
+                    icon: Icon(
+                      Icons.keyboard_arrow_right,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -37,7 +92,7 @@ class _ShowgraphState extends State<Showgraph> {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                  child: MyChart(widget.firestoreService),
+                  child: MyChart(widget.firestoreService, endDate),
                 ),
               ),
               SizedBox(
