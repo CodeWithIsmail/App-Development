@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:money_mate/ImportAll.dart';
 
 class Register extends StatefulWidget {
@@ -19,44 +17,70 @@ class _RegisterState extends State<Register> {
   TextEditingController conpass = TextEditingController();
   TextEditingController initialBal = TextEditingController();
 
+  // Helper function to validate username format
+  bool _isValidUsername(String username) {
+    final RegExp usernameRegExp = RegExp(r'^[a-zA-Z0-9]+$');
+    return usernameRegExp.hasMatch(username);
+  }
+
   void regi() async {
     try {
-      if (pass.text != conpass.text) {
-        CustomToast('Password don\'t match').ShowToast();
-      } else {
-        final newUser = await _auth.createUserWithEmailAndPassword(
-            email: uname.text.toLowerCase() + '@moneymate.com',
-            password: pass.text);
-        String email = uname.text.toLowerCase();
-
-        if (newUser != null) {
-          DateTime now = DateTime.now();
-          DateFormat dateFormat = DateFormat('dd-MMM-yy');
-          String currentDate = dateFormat.format(now);
-          FirestoreService firestoreService = FirestoreService(email);
-          firestoreService.addRecord('Income', 'Initial Balance',
-              int.parse(initialBal.text), currentDate);
-
-          // FirebaseFirestore.instance.collection(email + 'balance').add({
-          //   'Net_Bal': 0,
-          //   'Income': initialBal.text,
-          //   'Expense': 0,
-          // }).then((DocumentReference<Map<String, dynamic>> ref) {
-          //   print('Document added with ID: ${ref.id}');
-          // }).catchError((error) {
-          //   print('Failed to add document: $error');
-          // });
-          // Navigator.pushNamed(context, PageName.home);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => Homescreen(firestoreService),
-            ),
-          );
-          // Navigator.pushNamed(context, PageName.home);
-        } else {}
+      if (name.text.isEmpty ||
+          uname.text.isEmpty ||
+          pass.text.isEmpty ||
+          conpass.text.isEmpty ||
+          initialBal.text.isEmpty) {
+        CustomToast('All fields must be filled').ShowToast();
+        return;
       }
-    } on FirebaseAuthException catch (e) {}
+
+      if (!_isValidUsername(uname.text)) {
+        CustomToast('Username must contain only letters and numbers')
+            .ShowToast();
+        return;
+      }
+
+      if (pass.text.length < 6) {
+        CustomToast('Password must be at least 6 characters').ShowToast();
+        return;
+      }
+
+      if (pass.text != conpass.text) {
+        CustomToast('Passwords don\'t match').ShowToast();
+        return;
+      }
+
+      final newUser = await _auth.createUserWithEmailAndPassword(
+        email: uname.text.toLowerCase() + '@moneymate.com',
+        password: pass.text,
+      );
+
+      String email = uname.text.toLowerCase();
+
+      if (newUser != null) {
+        DateTime now = DateTime.now();
+        DateFormat dateFormat = DateFormat('dd-MMM-yy');
+        String currentDate = dateFormat.format(now);
+        FirestoreService firestoreService = FirestoreService(email);
+        firestoreService.addRecord(
+          'Income',
+          'Initial Balance',
+          int.parse(initialBal.text),
+          currentDate,
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Homescreen(firestoreService),
+          ),
+        );
+      } else {
+        CustomToast('Registration failed. Please try again.').ShowToast();
+      }
+    } on FirebaseAuthException catch (e) {
+      CustomToast('Username already exists. Try another username.').ShowToast();
+    }
   }
 
   @override

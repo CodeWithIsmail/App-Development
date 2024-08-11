@@ -12,6 +12,8 @@ class Mainscreen extends StatefulWidget {
 }
 
 class _MainscreenState extends State<Mainscreen> {
+
+
   void EditOrDelete(DocumentSnapshot document) {
     showDialog(
       context: context,
@@ -189,7 +191,8 @@ class _MainscreenState extends State<Mainscreen> {
 
                       return GestureDetector(
                         onDoubleTap: () {
-                          EditOrDelete(document);
+                          if (Category != 'Initial Balance')
+                            EditOrDelete(document);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(

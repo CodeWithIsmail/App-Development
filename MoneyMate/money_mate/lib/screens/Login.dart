@@ -15,8 +15,6 @@ class _LoginState extends State<Login> {
   TextEditingController uname = TextEditingController();
   TextEditingController pass = TextEditingController();
 
-  void ForgetPass() {}
-
   void login() async {
     try {
       String email = uname.text.toLowerCase();
@@ -26,7 +24,6 @@ class _LoginState extends State<Login> {
       if (currentUser != null) {
         print('email: $email');
         FirestoreService firestoreService = FirestoreService(email);
-        // Navigator.pushNamed(context, PageName.home);
 
         Navigator.pushReplacement(
           context,
@@ -36,17 +33,7 @@ class _LoginState extends State<Login> {
         );
       }
     } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case 'user-not-found':
-          CustomToast('No user found for that username').ShowToast();
-          break;
-        case 'wrong-password':
-          CustomToast('Wrong password provided').ShowToast();
-          break;
-        default:
-          CustomToast('An unexpected error occurred. Please try again')
-              .ShowToast();
-      }
+      CustomToast('Invalid credential. Login failed.').ShowToast();
     }
   }
 
@@ -66,17 +53,9 @@ class _LoginState extends State<Login> {
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Column(
                     children: [
-                      MyTextField('Username', uname, false,1),
+                      MyTextField('Username', uname, false, 1),
                       SizedBox(height: 20),
-                      MyTextField('Password', pass, true,1),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          MyTextGestureDetector('Forget Password?',
-                              Colors.grey.shade100, 14, true, ForgetPass),
-                        ],
-                      ),
+                      MyTextField('Password', pass, true, 1),
                       SizedBox(height: 40),
                       MyButtonGestureDetector(login, 'Login'),
                       SizedBox(

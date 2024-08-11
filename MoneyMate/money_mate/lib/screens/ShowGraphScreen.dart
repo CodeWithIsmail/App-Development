@@ -39,7 +39,7 @@ class _ShowgraphState extends State<Showgraph> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Date wise Expense Bar Chart',
+                'Date - Expense Bar Chart',
                 style: TransactionTextStyle,
               ),
               SizedBox(
@@ -51,8 +51,8 @@ class _ShowgraphState extends State<Showgraph> {
                   IconButton(
                     onPressed: () {
                       setState(() {
-                        endDate = endDate.subtract(Duration(days: 14));
-                        startDate = startDate.subtract(Duration(days: 14));
+                        endDate = endDate.subtract(Duration(days: 15));
+                        startDate = startDate.subtract(Duration(days: 15));
                       });
                     },
                     icon: Icon(
@@ -66,8 +66,8 @@ class _ShowgraphState extends State<Showgraph> {
                         String newTemp = dateFormat.format(temp);
                         if (newTemp != enDate) {
                           setState(() {
-                            endDate = endDate.add(Duration(days: 14));
-                            startDate = startDate.add(Duration(days: 14));
+                            endDate = endDate.add(Duration(days: 15));
+                            startDate = startDate.add(Duration(days: 15));
                           });
                         }
 
@@ -99,7 +99,7 @@ class _ShowgraphState extends State<Showgraph> {
                 height: 50,
               ),
               Text(
-                'Category wise Expense Bar Chart',
+                'Category - Expense Bar Chart',
                 style: TransactionTextStyle,
               ),
               SizedBox(

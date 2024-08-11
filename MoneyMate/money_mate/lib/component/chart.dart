@@ -32,7 +32,7 @@ class _MyChartState extends State<MyChart> {
   Stream<Map<String, double>> getExpensesStream() async* {
     DateTime now = widget.startdate;
     print(now);
-    DateTime fifteenDaysAgo = now.subtract(Duration(days: 14));
+    DateTime fifteenDaysAgo = now.subtract(Duration(days: 15));
     DateFormat dayFormat = DateFormat('dd');
     DateFormat dateFormat = DateFormat('dd-MMM-yy');
     Map<String, double> expenses = {};
@@ -47,10 +47,11 @@ class _MyChartState extends State<MyChart> {
 
     yield* collectionRef.snapshots().map((querySnapshot) {
       List<QueryDocumentSnapshot> filteredDocs =
-      querySnapshot.docs.where((doc) {
+          querySnapshot.docs.where((doc) {
         DateTime docDate = dateFormat.parse(doc['date']);
         return (docDate.isAfter(fifteenDaysAgo) ||
-            docDate.isAtSameMomentAs(fifteenDaysAgo)) &&
+                docDate.isAtSameMomentAs(fifteenDaysAgo)) &&
+            docDate.isBefore(now.add(Duration(days: 0))) &&
             doc['Transaction_type'] == 'Expense';
       }).toList();
 
@@ -140,7 +141,6 @@ class _MyChartState extends State<MyChart> {
         show: false,
       ),
       barGroups: barGroups,
-
     );
   }
 
