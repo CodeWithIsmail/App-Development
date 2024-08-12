@@ -17,7 +17,6 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30),
@@ -27,7 +26,6 @@ class _HomescreenState extends State<Homescreen> {
             setState(() {
               index = value;
             });
-            // print(value);
           },
           backgroundColor: Colors.white,
           showSelectedLabels: false,
@@ -36,14 +34,14 @@ class _HomescreenState extends State<Homescreen> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(
-                CupertinoIcons.home,
+                Icons.home,
                 color: index == 0 ? selectColor : unselectColor,
               ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                CupertinoIcons.graph_square_fill,
+                Icons.bar_chart_rounded,
                 color: index == 1 ? selectColor : unselectColor,
               ),
               label: 'Stats',
@@ -65,7 +63,6 @@ class _HomescreenState extends State<Homescreen> {
         child: CustomFloatingButton(),
         shape: CircleBorder(),
       ),
-
       body: index == 0
           ? Mainscreen(widget.firestoreService)
           : Showgraph(widget.firestoreService),

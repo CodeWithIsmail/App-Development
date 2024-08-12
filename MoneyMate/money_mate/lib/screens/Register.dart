@@ -67,6 +67,7 @@ class _RegisterState extends State<Register> {
           'Initial Balance',
           int.parse(initialBal.text),
           currentDate,
+          now,
         );
 
         Navigator.pushReplacement(

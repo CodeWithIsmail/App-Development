@@ -95,7 +95,7 @@ class _AddExpenseState extends State<AddExpense> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Add Transaction',
+                  '${widget.title} Transaction',
                   style: addTextStyle,
                 ),
                 SizedBox(
@@ -244,8 +244,23 @@ class _AddExpenseState extends State<AddExpense> {
                       print(amount);
                       print(date);
 
-                      widget.firestoreService
-                          .addRecord(type, category, amount, date);
+                      DateTime parsedDate = DateFormat("dd-MMM-yy").parse(date);
+                      DateTime finalDateTime = DateTime(
+                        parsedDate.year,
+                        parsedDate.month,
+                        parsedDate.day,
+                        0,
+                        0,
+                        0,
+                        0, // Millisecond
+                      );
+                      widget.firestoreService.addRecord(
+                        type,
+                        category,
+                        amount,
+                        date,
+                        finalDateTime,
+                      );
 
                       Navigator.pop(context);
                     },

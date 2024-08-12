@@ -5,8 +5,8 @@ class FirestoreService {
 
   FirestoreService(this.collectionName);
 
-  Future<void> addRecord(
-      String type, String category, int amount, String date) {
+  Future<void> addRecord(String type, String category, int amount, String date,
+      DateTime datetime) {
     final CollectionReference transaction =
         FirebaseFirestore.instance.collection(this.collectionName);
     return transaction.add(
@@ -15,12 +15,13 @@ class FirestoreService {
         'Category': category,
         'Amount': amount,
         'date': date,
+        'dateTime': datetime,
       },
     );
   }
 
-  Future<void> updateRecord(
-      String type, String category, int amount, String date, String id) {
+  Future<void> updateRecord(String type, String category, int amount,
+      String date, String id, DateTime datetime) {
     final CollectionReference transaction =
         FirebaseFirestore.instance.collection(this.collectionName);
     return transaction.doc(id).update(
@@ -29,6 +30,7 @@ class FirestoreService {
         'Category': category,
         'Amount': amount,
         'date': date,
+        'dateTime': datetime,
       },
     );
   }
@@ -42,6 +44,6 @@ class FirestoreService {
   Stream<QuerySnapshot> getRecords() {
     final CollectionReference transaction =
         FirebaseFirestore.instance.collection(this.collectionName);
-    return transaction.orderBy('date', descending: true).snapshots();
+    return transaction.orderBy('dateTime', descending: true).snapshots();
   }
 }

@@ -8,6 +8,7 @@ export 'package:fluttertoast/fluttertoast.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:share_plus/share_plus.dart';
+export 'package:flutter/services.dart';
 
 // screens
 export 'screens/HomeScreen.dart';

@@ -31,7 +31,7 @@ Map<String, Icon> IconMap = {
   'Shopping': Icon(FontAwesomeIcons.bagShopping, color: Colors.white),
   'Education': Icon(FontAwesomeIcons.book, color: Colors.white),
   'Transport': Icon(FontAwesomeIcons.bus, color: Colors.white),
-  'Health': Icon(FontAwesomeIcons.heartCircleCheck, color: Colors.white),
+  'Health': Icon(Icons.medical_information_rounded, color: Colors.white),
   'Travel': Icon(FontAwesomeIcons.plane, color: Colors.white),
   'Home': Icon(FontAwesomeIcons.house, color: Colors.white),
   'Others': Icon(FontAwesomeIcons.moneyBill, color: Colors.white),

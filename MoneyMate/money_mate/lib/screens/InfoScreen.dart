@@ -24,7 +24,7 @@ class InfoScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 45,
                 ),
                 Image(
                   image: AssetImage('images/moneymate.png'),
@@ -118,7 +118,7 @@ class InfoScreen extends StatelessWidget {
                   color: Colors.white,
                   child: GestureDetector(
                     onTap: () => launch(
-                        'https://github.com/CodeWithIsmail/App-Development/issues'),
+                        'https://github.com/CodeWithIsmail/MoneyMate/issues'),
                     child: ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Colors.white,
