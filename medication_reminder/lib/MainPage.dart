@@ -35,7 +35,7 @@ class _MainPageState extends State<MainPage> {
               crossAxisCount: 2, crossAxisSpacing: 4, mainAxisSpacing: 10),
           scrollDirection: Axis.vertical,
           children: [
-            CustomMedicineCard('Napa', '500 mg', 'Tablet', 'images/drugs.png',
+            CustomMedicineCard('Napa', '500 mg', 'Tablet', 'images/pill.png',
                 'Every day', '3 Times', '23 Jul-24 8:30pm'),
             CustomMedicineCard('Syrup', '500 mg', 'Syrup', 'images/syrup.png',
                 'Every day', '2 Times', '23 Jul-24 8:30pm'),
