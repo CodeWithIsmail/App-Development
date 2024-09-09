@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "948611706195",
+    "project_id": "healthtracker-c114d",
+    "storage_bucket": "healthtracker-c114d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948611706195:android:e2f508d5d5985f78b485a6",
+        "android_client_info": {
+          "package_name": "com.example.medication_reminder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC0gyUVNgE2cHMeuQcQdhVNcSRV2TxG-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

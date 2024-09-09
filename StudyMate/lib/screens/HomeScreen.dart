@@ -56,8 +56,23 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: () {},
             icon: Icon(Icons.logout),
-          )
+          ),
         ],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xffaa4b6b),
+                Color(0xff6b6b83),
+                Color(0xff3b8d99),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int number) {
@@ -68,9 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         type: BottomNavigationBarType.fixed,
         elevation: 5,
+
         // backgroundColor: Colors.grey.shade400,
-        showUnselectedLabels: false,
-        showSelectedLabels: false,
+        // showUnselectedLabels: false,
+        // showSelectedLabels: false,
         items: [
           BottomNavigationBarItem(
             icon: Icon(

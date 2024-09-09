@@ -1,9 +1,11 @@
 import 'package:medication_reminder/Screens/AddScreen.dart';
 
-import 'ImportAll.dart';
+import '../ImportAll.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  String username;
+
+  MainPage(this.username);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -15,6 +17,16 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // LocalNotification.showSimpleNotification(
+          //     title: 'It\'s medication time',
+          //     body: 'Take this medicine',
+          //     payload: 'This is a simple notification');
+
+          // LocalNotification.showPeriodicNotification(
+          //     title: 'It\'s medication time',
+          //     body: 'Take this medicine',
+          //     payload: 'This is a simple notification');
+
           Navigator.push(
             context,
             MaterialPageRoute(

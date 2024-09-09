@@ -8,8 +8,32 @@ class AddMed extends StatefulWidget {
 }
 
 class _AddMedState extends State<AddMed> {
-  final TextEditingController _timesController = TextEditingController();
-  int _numberOfTimes = 0;
+  final TextEditingController MedicineName = TextEditingController();
+  final TextEditingController quantity = TextEditingController();
+  final TextEditingController MedicineType = TextEditingController();
+  final TextEditingController DayGap = TextEditingController();
+  final TextEditingController StartDay = TextEditingController();
+  final TextEditingController DailyTimes = TextEditingController();
+
+  int _numberOfTimes = 1;
+  List<String> _selectedTimes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _updateSelectedTimes();
+  }
+
+  void _updateSelectedTimes() {
+    setState(() {
+      if (_numberOfTimes > 0) {
+        _selectedTimes =
+            List.generate(_numberOfTimes, (index) => "Enter Time ${index + 1}");
+      } else {
+        _selectedTimes = [];
+      }
+    });
+  }
 
   List<Widget> _buildTimePickers() {
     List<Widget> timePickers = [];
@@ -25,12 +49,14 @@ class _AddMedState extends State<AddMed> {
                 initialTime: TimeOfDay.now(),
               );
               if (selectedTime != null) {
-                // You can store the selected time in a list or map if needed
-                // and update the corresponding TextFormField
+                setState(() {
+                  _selectedTimes[i] = selectedTime.format(context);
+                });
               }
             },
             decoration: InputDecoration(
-              hintText: 'Time ${i + 1}',
+              hintText:
+                  _selectedTimes.isNotEmpty ? _selectedTimes[i] : 'Select Time',
               filled: true,
               fillColor: Colors.white,
               prefixIcon: Icon(
@@ -56,6 +82,7 @@ class _AddMedState extends State<AddMed> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +104,9 @@ class _AddMedState extends State<AddMed> {
                     SizedBox(width: 0),
                   ],
                 ),
+                SizedBox(height: 30),
                 TextFormField(
+                  controller: MedicineName,
                   decoration: InputDecoration(
                     hintText: 'Medicine name',
                     filled: true,
@@ -87,8 +116,9 @@ class _AddMedState extends State<AddMed> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 TextFormField(
+                  controller: quantity,
                   decoration: InputDecoration(
                     hintText: 'Doses in mg',
                     filled: true,
@@ -98,9 +128,9 @@ class _AddMedState extends State<AddMed> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
-                Text('Medicine type'),
-                SizedBox(height: 16),
+                SizedBox(height: 30),
+                Text('Medicine type', style: AddPageTextStyle),
+                SizedBox(height: 15),
                 SizedBox(
                   height: 120,
                   child: GridView(
@@ -120,10 +150,12 @@ class _AddMedState extends State<AddMed> {
                     ],
                   ),
                 ),
-                SizedBox(height: 16),
-                Text('After how many days to take this medicine?'),
+                SizedBox(height: 30),
+                Text('After how many days to take this medicine?',
+                    style: AddPageTextStyle),
                 SizedBox(height: 16),
                 TextFormField(
+                  controller: DayGap,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: 'Eg. enter 0 for everyday',
@@ -134,16 +166,17 @@ class _AddMedState extends State<AddMed> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
-                Text('Starting date'),
+                SizedBox(height: 30),
+                Text('Starting date', style: AddPageTextStyle),
                 SizedBox(height: 16),
                 TextFormField(
+                  controller: StartDay,
                   readOnly: true,
                   onTap: () async {
                     DateTime? current = await showDatePicker(
                       context: context,
-                      firstDate: DateTime.now().subtract(Duration(days: 365)),
-                      lastDate: DateTime.now(),
+                      lastDate: DateTime.now().add(Duration(days: 100)),
+                      firstDate: DateTime.now(),
                     );
                   },
                   decoration: InputDecoration(
@@ -159,9 +192,9 @@ class _AddMedState extends State<AddMed> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 30),
                 TextFormField(
-                  controller: _timesController,
+                  controller: DailyTimes,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: 'How many times should be taken daily?',
@@ -172,15 +205,36 @@ class _AddMedState extends State<AddMed> {
                     ),
                   ),
                   onChanged: (value) {
-                    setState(() {
-                      _numberOfTimes = int.tryParse(value) ?? 1;
-                    });
+                    _numberOfTimes = int.tryParse(value) ?? 0;
+                    _updateSelectedTimes();
                   },
                 ),
                 SizedBox(height: 16),
                 Column(
                   children: _buildTimePickers(),
                 ),
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: kToolbarHeight,
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'Add',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
