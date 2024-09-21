@@ -9,44 +9,112 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   File? selectedMedia;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Text Recognition",
-        ),
+        title: const Text("Text Recognition"),
       ),
       body: _buildUI(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          List<MediaFile>? media = await GalleryPicker.pickMedia(
-              context: context, singleMedia: true);
-          if (media != null && media.isNotEmpty) {
-            var data = await media.first.getFile();
-            setState(() {
-              selectedMedia = data;
-            });
-          }
+        onPressed: () {
+          _showPicker(context);
         },
-        child: const Icon(
-          Icons.add,
-        ),
+        child: const Icon(Icons.add),
       ),
     );
   }
 
-  Widget _buildUI() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        _imageView(),
-        _extractTextView(),
+  void _showPicker(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Pick from Gallery'),
+                onTap: () {
+                  _getImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text('Take a Picture'),
+                onTap: () {
+                  _getImage(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _getImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+    if (pickedFile != null) {
+      File? croppedFile = await _cropImage(File(pickedFile.path));
+      if (croppedFile != null) {
+        setState(() {
+          selectedMedia = croppedFile;
+        });
+      }
+    }
+  }
+
+  Future<File?> _cropImage(File imageFile) async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: imageFile.path,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Crop Image',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+            CropAspectRatioPresetCustom(),
+          ],
+        ),
+        IOSUiSettings(
+          title: 'Crop Image',
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+            CropAspectRatioPresetCustom(),
+          ],
+        ),
       ],
+    );
+    if (croppedFile != null) {
+      return File(croppedFile.path);
+    }
+    return null;
+  }
+
+  Widget _buildUI() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _imageView(),
+            const SizedBox(height: 20),
+            _extractTextView(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -75,9 +143,7 @@ class _HomePageState extends State<HomePage> {
       builder: (context, snapshot) {
         return Text(
           snapshot.data ?? "",
-          style: const TextStyle(
-            fontSize: 25,
-          ),
+          style: const TextStyle(fontSize: 20),
         );
       },
     );
@@ -94,4 +160,12 @@ class _HomePageState extends State<HomePage> {
     textRecognizer.close();
     return text;
   }
+}
+
+class CropAspectRatioPresetCustom implements CropAspectRatioPresetData {
+  @override
+  (int, int)? get data => (2, 3);
+
+  @override
+  String get name => '2x3 (customized)';
 }

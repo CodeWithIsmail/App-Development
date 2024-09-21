@@ -1,10 +1,10 @@
 import 'package:medication_reminder/ImportAll.dart';
 
 class AddMed extends StatefulWidget {
-  const AddMed({super.key});
 
   @override
   State<AddMed> createState() => _AddMedState();
+
 }
 
 class _AddMedState extends State<AddMed> {
@@ -224,7 +224,18 @@ class _AddMedState extends State<AddMed> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final FirestoreService firestoreService =
+                          FirestoreService();
+                      firestoreService.addRecord(
+                        medicineName: MedicineName.text,
+                        quantity: quantity.text,
+                        medicineType: "Pill",
+                        dayGap: 2,
+                        startDay: "2024-09-09 16:30",
+                        dailyTimes: int.parse(DailyTimes.text) ,
+                      );
+                    },
                     child: Text(
                       'Add',
                       style: TextStyle(
