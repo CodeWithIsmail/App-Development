@@ -6,3 +6,4 @@ export 'package:image_cropper/image_cropper.dart';
 export 'package:flutter/material.dart';
 export 'Homepage.dart';
 export 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+export 'package:flutter/services.dart';
