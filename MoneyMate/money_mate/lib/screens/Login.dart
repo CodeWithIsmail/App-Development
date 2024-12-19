@@ -25,6 +25,8 @@ class _LoginState extends State<Login> {
         print('email: $email');
         FirestoreService firestoreService = FirestoreService(email);
 
+
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

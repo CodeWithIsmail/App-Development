@@ -10,6 +10,9 @@ export 'package:url_launcher/url_launcher.dart';
 export 'package:share_plus/share_plus.dart';
 export 'package:flutter/services.dart';
 
+export 'package:syncfusion_flutter_charts/charts.dart';
+export 'package:syncfusion_flutter_charts/sparkcharts.dart';
+
 // screens
 export 'screens/HomeScreen.dart';
 export 'screens/MainScreen.dart';
@@ -18,6 +21,8 @@ export 'screens/ShowGraphScreen.dart';
 export 'screens/Login.dart';
 export 'screens/Register.dart';
 export 'screens/InfoScreen.dart';
+
+export 'chartTest.dart';
 
 
 // helper

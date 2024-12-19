@@ -19,6 +19,7 @@ dependencies:
   firebase_auth: ^5.1.2
   fluttertoast: ^8.2.6
   share_plus: ^10.0.0
+  syncfusion_flutter_charts: ^28.1.35
 
 
 dev_dependencies:

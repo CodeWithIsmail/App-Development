@@ -61,73 +61,73 @@ class _MainscreenState extends State<Mainscreen> {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.grey.shade100,
-                        child: Image.asset('images/moneymate.png'),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'MoneyMate',
-                            style: welcomeTextStyle,
-                          ),
-                          Text(
-                            widget.firestoreService.collectionName,
-                            style: NameTextStyle,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginOrRegistration(),
-                            ),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.logout_outlined,
-                          size: 23,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InfoScreen(),
-                            ),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.info_outline_rounded,
-                          size: 23,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 15),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Row(
+            //         children: [
+            //           CircleAvatar(
+            //             radius: 20,
+            //             backgroundColor: Colors.grey.shade100,
+            //             child: Image.asset('images/moneymate.png'),
+            //           ),
+            //           SizedBox(
+            //             width: 10,
+            //           ),
+            //           Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 'MoneyMate',
+            //                 style: welcomeTextStyle,
+            //               ),
+            //               Text(
+            //                 widget.firestoreService.collectionName,
+            //                 style: NameTextStyle,
+            //               ),
+            //             ],
+            //           ),
+            //         ],
+            //       ),
+            //       Row(
+            //         children: [
+            //           IconButton(
+            //             onPressed: () {
+            //               FirebaseAuth.instance.signOut();
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                   builder: (context) => LoginOrRegistration(),
+            //                 ),
+            //               );
+            //             },
+            //             icon: Icon(
+            //               Icons.logout_outlined,
+            //               size: 23,
+            //             ),
+            //           ),
+            //           IconButton(
+            //             onPressed: () {
+            //               Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                   builder: (context) => InfoScreen(),
+            //                 ),
+            //               );
+            //             },
+            //             icon: Icon(
+            //               Icons.info_outline_rounded,
+            //               size: 23,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(height: 15),
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width / 2,

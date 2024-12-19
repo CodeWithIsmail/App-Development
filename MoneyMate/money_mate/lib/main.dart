@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Expense Tracker',
       theme: ThemeData(colorScheme: colorList),
+      // home: ExpenseChart(),
       home: AuthWrapper(),
 
       // initialRoute: RouteName.home,

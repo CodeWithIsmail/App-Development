@@ -11,12 +11,77 @@ class Homescreen extends StatefulWidget {
   State<Homescreen> createState() => _HomescreenState();
 }
 
+
 class _HomescreenState extends State<Homescreen> {
+
   int index = 0;
+  String uname="";
+  @override
+  void initState() {
+    String? email = FirebaseAuth.instance.currentUser?.email;
+    uname = email!.substring(0, email.indexOf('@'));
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.grey.shade100,
+            child: Image.asset('images/moneymate.png'),
+          ),
+        ),
+        leadingWidth: 50,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'MoneyMate',
+              style: welcomeTextStyle,
+            ),
+            Text(
+              uname,
+              style: NameTextStyle,
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginOrRegistration(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.logout_outlined,
+              size: 23,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InfoScreen(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.info_outline_rounded,
+              size: 23,
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(30),
@@ -64,8 +129,8 @@ class _HomescreenState extends State<Homescreen> {
         shape: CircleBorder(),
       ),
       body: index == 0
-          ? Mainscreen(widget.firestoreService)
-          : Showgraph(widget.firestoreService),
+          ? Mainscreen(widget.firestoreService) :ExpenseChart(),
+          // : Showgraph(widget.firestoreService),
     );
   }
 }
