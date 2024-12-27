@@ -1,7 +1,13 @@
 import 'ImportAll.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+  await initializeNotifications();
+  await requestNotificationPermissions();
+  await scheduleDailyNotification();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

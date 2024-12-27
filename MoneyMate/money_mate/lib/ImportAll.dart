@@ -12,6 +12,7 @@ export 'package:flutter/services.dart';
 
 export 'package:syncfusion_flutter_charts/charts.dart';
 export 'package:syncfusion_flutter_charts/sparkcharts.dart';
+export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 // screens
 export 'screens/HomeScreen.dart';
@@ -23,7 +24,7 @@ export 'screens/Register.dart';
 export 'screens/InfoScreen.dart';
 
 export 'chartTest.dart';
-
+export 'ScheduleNotiify.dart';
 
 // helper
 export 'helper/AllRoutes.dart';
