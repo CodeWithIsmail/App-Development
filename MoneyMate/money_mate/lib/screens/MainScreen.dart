@@ -138,7 +138,7 @@ class _MainscreenState extends State<Mainscreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(17.0),
-                child: MoneyDashboard(widget.firestoreService),
+                child: MoneyDashboard(),
               ),
             ),
             SizedBox(

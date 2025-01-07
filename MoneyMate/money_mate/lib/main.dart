@@ -13,9 +13,7 @@ void main() async {
   );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Lock to portrait
-    // DeviceOrientation.landscapeLeft, // Lock to landscape
-    // DeviceOrientation.landscapeRight,
-    // DeviceOrientation.portraitDown, // If you need to lock both portrait directions
+
   ]);
   runApp(MyApp());
 }
@@ -25,14 +23,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Expense Tracker',
-      theme: ThemeData(colorScheme: colorList),
-      // home: ExpenseChart(),
-      home: AuthWrapper(),
+    return ChangeNotifierProvider(
+      create: (context) => TransactionProvider(),
+      child: MaterialApp(
+        title: 'Expense Tracker',
+        theme: ThemeData(colorScheme: colorList),
+        // home: ExpenseChart(),
+        home: AuthWrapper(),
 
-      // initialRoute: RouteName.home,
-      routes: allPageRoute,
+        // initialRoute: RouteName.home,
+        routes: allPageRoute,
+      ),
     );
   }
 }
