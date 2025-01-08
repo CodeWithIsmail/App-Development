@@ -17,6 +17,7 @@ class _RegisterState extends State<Register> {
   TextEditingController conpass = TextEditingController();
   TextEditingController initialBal = TextEditingController();
 
+  // Helper function to validate username format
   bool _isValidUsername(String username) {
     final RegExp usernameRegExp = RegExp(r'^[a-zA-Z0-9]+$');
     return usernameRegExp.hasMatch(username);
@@ -48,31 +49,36 @@ class _RegisterState extends State<Register> {
         CustomToast('Passwords don\'t match').ShowToast();
         return;
       }
-      String email = uname.text.toLowerCase();
 
-      await _auth.createUserWithEmailAndPassword(
-        email: '$email@moneymate.com',
+      final newUser = await _auth.createUserWithEmailAndPassword(
+        email: uname.text.toLowerCase() + '@moneymate.com',
         password: pass.text,
       );
 
-      DateTime now = DateTime.now();
-      DateFormat dateFormat = DateFormat('dd-MMM-yy');
-      String currentDate = dateFormat.format(now);
-      FirestoreService firestoreService = FirestoreService(email);
-      firestoreService.addRecord(
-        'Income',
-        'Initial Balance',
-        int.parse(initialBal.text),
-        currentDate,
-        now,
-      );
+      String email = uname.text.toLowerCase();
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Homescreen(),
-        ),
-      );
+      if (newUser != null) {
+        DateTime now = DateTime.now();
+        DateFormat dateFormat = DateFormat('dd-MMM-yy');
+        String currentDate = dateFormat.format(now);
+        FirestoreService firestoreService = FirestoreService(email);
+        firestoreService.addRecord(
+          'Income',
+          'Initial Balance',
+          int.parse(initialBal.text),
+          currentDate,
+          now,
+        );
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Homescreen(),
+          ),
+        );
+      } else {
+        CustomToast('Registration failed. Please try again.').ShowToast();
+      }
     } on FirebaseAuthException catch (e) {
       CustomToast('Username already exists. Try another username.').ShowToast();
     }
@@ -82,8 +88,8 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.only(top: 55),
-        decoration: const BoxDecoration(
+        padding: EdgeInsets.only(top: 55),
+        decoration: BoxDecoration(
           gradient: gradient,
         ),
         child: Center(
@@ -91,27 +97,27 @@ class _RegisterState extends State<Register> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const AppIcon(),
+                AppIcon(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Column(
                     children: [
                       MyTextField('Name', name, false, 1),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
                       MyTextField('Username', uname, false, 1),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
                       MyTextField('Password', pass, true, 1),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
                       MyTextField('Confirm Password', conpass, true, 1),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
                       MyTextField('Current balance', initialBal, true, 0),
-                      const SizedBox(height: 40),
+                      SizedBox(height: 40),
                       MyButtonGestureDetector(regi, 'Register'),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
+                          Text(
                             'Already have an account?  ',
                             style: TextStyle(color: Colors.white),
                           ),

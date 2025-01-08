@@ -26,6 +26,7 @@ List<String> Category = [
   'Travel',
   'Others'
 ];
+
 Map<String, Icon> IconMap = {
   'Food': Icon(FontAwesomeIcons.burger, color: Colors.white),
   'Shopping': Icon(FontAwesomeIcons.bagShopping, color: Colors.white),

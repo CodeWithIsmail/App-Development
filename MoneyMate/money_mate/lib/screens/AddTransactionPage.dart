@@ -1,20 +1,21 @@
 import '../ImportAll.dart';
 
-class AddExpense extends StatefulWidget {
-  String ExpenseDropDownText;
-  String TransactionDropDownText;
+class HandleTransaction extends StatefulWidget {
+  String expenseDropDownText;
+  String transactionDropDownText;
   String amount;
   String date;
   String title;
 
-  AddExpense(this.title, this.TransactionDropDownText, this.ExpenseDropDownText,
-      this.amount, this.date);
+  HandleTransaction(this.title, this.transactionDropDownText,
+      this.expenseDropDownText, this.amount, this.date,
+      {super.key});
 
   @override
-  State<AddExpense> createState() => _AddExpenseState();
+  State<HandleTransaction> createState() => _HandleTransactionState();
 }
 
-class _AddExpenseState extends State<AddExpense> {
+class _HandleTransactionState extends State<HandleTransaction> {
   TextEditingController amountCon = TextEditingController();
   TextEditingController dateCon = TextEditingController();
   DateTime selected = DateTime.now();
@@ -24,8 +25,7 @@ class _AddExpenseState extends State<AddExpense> {
   void initState() {
     if (widget.title == 'Edit') {
       dateCon.text = widget.date;
-      String input = widget.amount;
-      String amount = input.substring(0, input.indexOf(' '));
+      String amount = widget.amount.split(' ')[0];
       amountCon.text = amount;
     } else {
       dateCon.text = DateFormat('dd-MMM-yy').format(DateTime.now());
@@ -34,51 +34,10 @@ class _AddExpenseState extends State<AddExpense> {
     super.initState();
   }
 
-  var transactionType = [
-    'Expense',
-    'Income',
-  ];
-  var expenseType = [
-    'Food',
-    'Shopping',
-    'Education',
-    'Transport',
-    'Health',
-    'Travel',
-    'Home',
-    'Others',
-  ];
-  var incomeType = [
-    'Salary',
-    'Saving',
-    'Others',
-  ];
-
-  void updateDropDown() {
-    if (widget.TransactionDropDownText == 'Income') {
-      widget.ExpenseDropDownText = 'Salary';
-      expenseType = [
-        'Salary',
-        'Saving',
-        'Others',
-      ];
-    } else {
-      widget.ExpenseDropDownText = 'Health';
-      expenseType = [
-        'Food',
-        'Shopping',
-        'Education',
-        'Transport',
-        'Health',
-        'Travel',
-        'Home',
-        'Others',
-      ];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final addTransactionProvider = Provider.of<AddTransactionProvider>(context);
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -89,13 +48,8 @@ class _AddExpenseState extends State<AddExpense> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  '${widget.title} Transaction',
-                  style: addTextStyle,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
+                Text('${widget.title} Transaction', style: addTextStyle),
+                const SizedBox(height: 30),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   height: kToolbarHeight,
@@ -109,28 +63,23 @@ class _AddExpenseState extends State<AddExpense> {
                       const Icon(Icons.list),
                       const Text('Select transaction type'),
                       DropdownButton(
-                          value: widget.TransactionDropDownText,
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down,
-                          ),
-                          items: transactionType.map((String transactionType) {
-                            return DropdownMenuItem(
-                              value: transactionType,
-                              child: Text(transactionType),
-                            );
-                          }).toList(),
-                          onChanged: (newValue) {
-                            setState(() {
-                              widget.TransactionDropDownText = newValue!;
-                              updateDropDown();
-                            });
-                          }),
+                        value: addTransactionProvider.transactionType,
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: ['Expense', 'Income'].map((String type) {
+                          return DropdownMenuItem(
+                            value: type,
+                            child: Text(type),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          addTransactionProvider
+                              .updateTransactionType(newValue!);
+                        },
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 18,
-                ),
+                const SizedBox(height: 18),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   height: kToolbarHeight,
@@ -142,33 +91,28 @@ class _AddExpenseState extends State<AddExpense> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Icon(Icons.list),
-                      Text('Select ${widget.TransactionDropDownText} type'),
+                      Text(
+                          'Select ${addTransactionProvider.transactionType} type'),
                       DropdownButton(
-                          value: widget.ExpenseDropDownText,
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down,
-                          ),
-                          items: expenseType.map((String expenseType) {
-                            return DropdownMenuItem(
-                              value: expenseType,
-                              child: Text(expenseType),
-                            );
-                          }).toList(),
-                          onChanged: (newValue) {
-                            setState(() {
-                              widget.ExpenseDropDownText = newValue!;
-                            });
-                          }),
+                        value: addTransactionProvider.expenseType,
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: addTransactionProvider.expenseOptions
+                            .map((String type) {
+                          return DropdownMenuItem(
+                            value: type,
+                            child: Text(type),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          addTransactionProvider.updateExpenseType(newValue!);
+                        },
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 CustomAmountInput(amountCon: amountCon),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 TextFormField(
                   controller: dateCon,
                   textAlignVertical: TextAlignVertical.center,
@@ -189,9 +133,7 @@ class _AddExpenseState extends State<AddExpense> {
                   },
                   decoration: dateFieldDecoration,
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 Container(
                   width: double.infinity,
                   height: kToolbarHeight,
@@ -201,9 +143,9 @@ class _AddExpenseState extends State<AddExpense> {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      String type = widget.TransactionDropDownText;
-                      String category = widget.ExpenseDropDownText;
-                      int amount = int.parse(amountCon.text.toString());
+                      String type = addTransactionProvider.transactionType;
+                      String category = addTransactionProvider.expenseType;
+                      int amount = int.parse(amountCon.text);
                       String date = dateCon.text;
 
                       DateTime finalDateTime = DatetimeHandle(date);
@@ -214,7 +156,7 @@ class _AddExpenseState extends State<AddExpense> {
                     },
                     child: const CustomSaveButton(),
                   ),
-                )
+                ),
               ],
             ),
           ),

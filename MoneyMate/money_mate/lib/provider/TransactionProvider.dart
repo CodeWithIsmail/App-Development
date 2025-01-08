@@ -21,7 +21,7 @@ class TransactionProvider extends ChangeNotifier {
   StreamSubscription? _transactionSubscription;
 
   TransactionProvider() {
-    _startListeningToTransactions(); // Start the listener when the provider is initialized
+    _startListeningToTransactions();
   }
 
   void _startListeningToTransactions() {

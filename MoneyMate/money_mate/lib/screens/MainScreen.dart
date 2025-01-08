@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import '../ImportAll.dart';
 
 class Mainscreen extends StatefulWidget {
@@ -12,37 +10,35 @@ class Mainscreen extends StatefulWidget {
 }
 
 class _MainscreenState extends State<Mainscreen> {
-
-
   void EditOrDelete(DocumentSnapshot document) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Choose an option'),
+          title: const Text('Choose an option'),
           actions: <Widget>[
             TextButton(
-              child: Text('Edit'),
+              child: const Text('Edit'),
               onPressed: () {
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
-                String Transaction_type = data['Transaction_type'];
+                String transactionType = data['Transaction_type'];
                 String Category = data['Category'];
                 String date = data['date'];
-                String amount = data['Amount'].toString() + ' TK';
+                String amount = '${data['Amount']} TK';
                 widget.firestoreService.deleteRecord(document.id);
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AddExpense('Edit', Transaction_type,
-                        Category, amount, date, widget.firestoreService),
+                    builder: (context) => HandleTransaction(
+                        'Edit', transactionType, Category, amount, date),
                   ),
                 );
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 widget.firestoreService.deleteRecord(document.id);
                 Navigator.of(context).pop();
@@ -61,73 +57,6 @@ class _MainscreenState extends State<Mainscreen> {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 10),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           CircleAvatar(
-            //             radius: 20,
-            //             backgroundColor: Colors.grey.shade100,
-            //             child: Image.asset('images/moneymate.png'),
-            //           ),
-            //           SizedBox(
-            //             width: 10,
-            //           ),
-            //           Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               Text(
-            //                 'MoneyMate',
-            //                 style: welcomeTextStyle,
-            //               ),
-            //               Text(
-            //                 widget.firestoreService.collectionName,
-            //                 style: NameTextStyle,
-            //               ),
-            //             ],
-            //           ),
-            //         ],
-            //       ),
-            //       Row(
-            //         children: [
-            //           IconButton(
-            //             onPressed: () {
-            //               FirebaseAuth.instance.signOut();
-            //               Navigator.push(
-            //                 context,
-            //                 MaterialPageRoute(
-            //                   builder: (context) => LoginOrRegistration(),
-            //                 ),
-            //               );
-            //             },
-            //             icon: Icon(
-            //               Icons.logout_outlined,
-            //               size: 23,
-            //             ),
-            //           ),
-            //           IconButton(
-            //             onPressed: () {
-            //               Navigator.push(
-            //                 context,
-            //                 MaterialPageRoute(
-            //                   builder: (context) => InfoScreen(),
-            //                 ),
-            //               );
-            //             },
-            //             icon: Icon(
-            //               Icons.info_outline_rounded,
-            //               size: 23,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(height: 15),
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width / 2,
@@ -141,10 +70,8 @@ class _MainscreenState extends State<Mainscreen> {
                 child: MoneyDashboard(),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
+            const SizedBox(height: 20),
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -153,23 +80,21 @@ class _MainscreenState extends State<Mainscreen> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: widget.firestoreService.getRecords(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return Center(child: Text('An error occurred!'));
+                    return const Center(child: Text('An error occurred!'));
                   }
 
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
 
                   if (!snapshot.hasData) {
-                    return Center(child: Text('No records found.'));
+                    return const Center(child: Text('No records found.'));
                   }
 
                   List transactionList = snapshot.data!.docs;
@@ -182,17 +107,16 @@ class _MainscreenState extends State<Mainscreen> {
                       Map<String, dynamic> data =
                           document.data() as Map<String, dynamic>;
 
-                      String Transaction_type = data['Transaction_type'];
+                      String transactionType = data['Transaction_type'];
                       String Category = data['Category'];
-                      String amount = data['Amount'].toString() + ' TK';
+                      String amount = '${data['Amount']} TK';
                       String date = data['date'];
-
-                      // print(Category + ',' + date);
 
                       return GestureDetector(
                         onDoubleTap: () {
-                          if (Category != 'Initial Balance')
+                          if (Category != 'Initial Balance') {
                             EditOrDelete(document);
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -246,7 +170,7 @@ class _MainscreenState extends State<Mainscreen> {
                                       ),
                                       CircleAvatar(
                                         radius: 15,
-                                        child: IconType[Transaction_type],
+                                        child: IconType[transactionType],
                                         backgroundColor:
                                             Colors.grey.withOpacity(0.2),
                                       ),

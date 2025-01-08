@@ -1,6 +1,6 @@
 import '../ImportAll.dart';
 
-final appNameTextStyle = TextStyle(
+const appNameTextStyle = TextStyle(
   fontSize: 32,
   fontWeight: FontWeight.bold,
   color: Colors.white,
@@ -13,7 +13,7 @@ final appNameTextStyle = TextStyle(
   ],
 );
 
-final gradient = LinearGradient(
+const gradient = LinearGradient(
   colors: [
     Color(0xFF355C7D),
     Color(0xFF6C5B7B),
@@ -137,7 +137,7 @@ final colorList = ColorScheme.light(
   secondary: Color(0xFF6C5B7B),
   tertiary: Color(0xFFC06C84),
 );
-final barGradient = LinearGradient(
+const barGradient = LinearGradient(
   colors: [
     Color(0xFF355C7D),
     Color(0xFF6C5B7B),
@@ -147,15 +147,28 @@ final barGradient = LinearGradient(
   end: Alignment.topCenter,
 );
 
-final barChartLeftStyle = TextStyle(
+const barChartLeftStyle = TextStyle(
   color: Colors.grey,
   fontWeight: FontWeight.bold,
   fontSize: 14,
 );
-final barChartBottomStyle = TextStyle(
+const barChartBottomStyle = TextStyle(
   color: Colors.grey,
   fontWeight: FontWeight.bold,
   fontSize: 7,
 );
 const selectColor = Colors.lightBlueAccent;
 const unselectColor = Colors.grey;
+
+var dateFieldDecoration = InputDecoration(
+  hintText: 'Date',
+  filled: true,
+  fillColor: Colors.white,
+  prefixIcon: const Icon(
+    FontAwesomeIcons.clock,
+    size: 20,
+  ),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(25),
+  ),
+);

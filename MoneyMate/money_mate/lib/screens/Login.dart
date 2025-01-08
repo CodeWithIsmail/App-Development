@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-import 'package:money_mate/ImportAll.dart';
+import '../ImportAll.dart';
 
 class Login extends StatefulWidget {
   void Function()? togglefunction;
@@ -18,22 +17,14 @@ class _LoginState extends State<Login> {
   void login() async {
     try {
       String email = uname.text.toLowerCase();
-      final currentUser = await _auth.signInWithEmailAndPassword(
-          email: uname.text.toLowerCase() + '@moneymate.com',
-          password: pass.text);
-      if (currentUser != null) {
-        print('email: $email');
-        FirestoreService firestoreService = FirestoreService(email);
-
-
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Homescreen(firestoreService),
-          ),
-        );
-      }
+      await _auth.signInWithEmailAndPassword(
+          email: '$email@moneymate.com', password: pass.text);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Homescreen(),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       CustomToast('Invalid credential. Login failed.').ShowToast();
     }
@@ -43,30 +34,30 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: 55),
-        decoration: BoxDecoration(gradient: gradient),
+        padding: const EdgeInsets.only(top: 55),
+        decoration: const BoxDecoration(gradient: gradient),
         child: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AppIcon(),
+                const AppIcon(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Column(
                     children: [
                       MyTextField('Username', uname, false, 1),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       MyTextField('Password', pass, true, 1),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       MyButtonGestureDetector(login, 'Login'),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Don\'t have an account?  ',
                             style: TextStyle(color: Colors.white),
                           ),

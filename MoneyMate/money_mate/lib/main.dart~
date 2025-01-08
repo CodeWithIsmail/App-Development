@@ -13,6 +13,7 @@ void main() async {
   );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp, // Lock to portrait
+
   ]);
   runApp(MyApp());
 }
@@ -24,12 +25,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => TransactionProvider()),
-        ChangeNotifierProvider(create: (context) => AddTransactionProvider()),
+
       ],
       child: MaterialApp(
-        title: 'MoneyMate',
+        title: 'Expense Tracker',
         theme: ThemeData(colorScheme: colorList),
+        // home: ExpenseChart(),
         home: const AuthWrapper(),
       ),
     );
