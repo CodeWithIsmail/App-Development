@@ -69,7 +69,7 @@ class _HomescreenState extends State<Homescreen> {
         shape: const CircleBorder(),
         child: const CustomFloatingButton(),
       ),
-      body: index == 0 ? Mainscreen(firestoreService) : ExpenseChart(),
+      body: index == 0 ? Mainscreen(firestoreService) : ExpenseChartBuilder(),
     );
   }
 }
